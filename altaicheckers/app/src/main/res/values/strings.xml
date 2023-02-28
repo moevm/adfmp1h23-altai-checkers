@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">altai-checkers</string>
+    <string name="title">Алтайские шашки</string>
+    <string name="play_with_bot">Играть с ботом</string>
+    <string name="play_with_friend">Играть с другом</string>
+    <string name="settings">Настройки игры</string>
+    <string name="statistics">Статистика</string>
+    <string name="about">О нас</string>
+    <string name="about_info">Приложение `Алтайские шашки` создано в рамках предмета `Разработка приложений для мобильных платформ`.</string>
+    <string name="developers">Разработчики:\nКуршев Е.О. @jendos2001\nЛойконен М.Р. @Miha1l\nМахаличев Н.А. @mahalichev</string>
 </resources>
