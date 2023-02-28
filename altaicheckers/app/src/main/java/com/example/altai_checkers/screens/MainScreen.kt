@@ -81,16 +81,14 @@ fun MainScreen(navController: NavHostController) {
         if (gamemode == "bot") {
             SettingsDialog(currentSettings = gameWithBotSettings,
                            onDismiss = {isDialogShown = false},
-                           onConfirm = {settings: MutableState<TimeSettings> -> run {
-                                            gameWithBotSettings = settings
-                                            isDialogShown = false }})
+                           onConfirm = {/* TODO */
+                                        isDialogShown = false })
         }
         if (gamemode == "friend")
             SettingsDialog(currentSettings = gameWithFriendSettings,
                            onDismiss = {isDialogShown = false},
-                           onConfirm = {settings: MutableState<TimeSettings> -> run {
-                                            gameWithFriendSettings = settings
-                                            isDialogShown = false }})
+                           onConfirm = {/* TODO */
+                                        isDialogShown = false})
     }
 }
 
@@ -111,11 +109,10 @@ fun ButtonWithSettings(text: String, onClick: () -> Unit, onSettingsClick: () ->
 @Composable
 fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
                    onDismiss: () -> Unit,
-                   onConfirm: (MutableState<TimeSettings>) -> Unit) {
-    var settings = currentSettings
-    var state by remember { mutableStateOf(settings.value.mode) }
-    var time by remember { mutableStateOf(settings.value.time)}
-    var addition by remember { mutableStateOf(settings.value.addition)}
+                   onConfirm: () -> Unit) {
+    var state by remember { mutableStateOf(currentSettings.value.mode) }
+    var time by remember { mutableStateOf(currentSettings.value.time)}
+    var addition by remember { mutableStateOf(currentSettings.value.addition)}
 
     Dialog(onDismissRequest = { onDismiss() },
            properties = DialogProperties(usePlatformDefaultWidth = false)) {
@@ -141,14 +138,14 @@ fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
                     TextField(value = time.toString(),
                               keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                               onValueChange = {
-                                  time = if (it.toIntOrNull() == null) 0
-                                         else it.toInt() })
+                                  /*time = if (it.toIntOrNull() == null) 0
+                                         else it.toInt() */})
                     if (state)
                         TextField(value = addition.toString(),
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             onValueChange = {
-                                addition = if (it.toIntOrNull() == null) 0
-                                           else it.toInt() })
+                                /*addition = if (it.toIntOrNull() == null) 0
+                                           else it.toInt()*/ })
                 }
 
                 Row(modifier = Modifier.fillMaxWidth(),
@@ -161,9 +158,8 @@ fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
                                 Text(text = stringResource(R.string.cancel),
                                      fontWeight = FontWeight.Bold,
                                      textAlign = TextAlign.Center) }
-                    Button(onClick = {
-                               settings = mutableStateOf(TimeSettings(state, time, addition))
-                               onConfirm(settings) },
+                    Button(onClick = {/* TODO */
+                                      onConfirm() },
                            modifier = Modifier.fillMaxWidth()
                                               .weight(1f)) {
                                 Text(text = stringResource(R.string.confirm),
