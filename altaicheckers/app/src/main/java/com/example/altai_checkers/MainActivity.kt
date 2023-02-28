@@ -23,10 +23,10 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "MainScreen") {
                         composable("MainScreen") { MainScreen(navController) }
-                        composable("GameVsBotScreen") { GameVsBotScreen() }
-                        composable("GameVsFriendScreen") { GameVsFriendScreen() }
-                        composable("StatisticsScreen") { StatisticsScreen() }
-                        composable("AboutScreen") { AboutScreen() }
+                        composable("GameVsBotScreen") { GameVsBotScreen(navController) }
+                        composable("GameVsFriendScreen") { GameVsFriendScreen(navController) }
+                        composable("StatisticsScreen") { StatisticsScreen(navController) }
+                        composable("AboutScreen") { AboutScreen(navController) }
                     }
                 }
             }
