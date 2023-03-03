@@ -4,17 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
@@ -48,11 +49,11 @@ fun GameVsBotScreen(navController: NavHostController) {
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .offset(y = 20.dp)
-            .padding(8.dp)) {
-        Column(horizontalAlignment = Alignment.Start) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
+            .padding(top = 10.dp)) {
+        /*Column( horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+                modifier = Modifier
             ) {
                 PauseButton(onSettingsClick = {
                     pauseState = true
@@ -61,19 +62,36 @@ fun GameVsBotScreen(navController: NavHostController) {
                     helpState = true
                 })
             }
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Column(horizontalAlignment = Alignment.Start) {
+
+        }*/
+        Column( horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+        ) {
             Row(modifier = Modifier
-                .fillMaxWidth()
+
             ) {
-                Text(text = "Чёрные")
-                Text(text = "0.5")
-                Text(text = "02:58")
+                Text(text = "Чёрные",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.width(170.dp)
+                )
+                Text(text = "0.5",
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.width(100.dp)
+                )
+                Text(text = "02:58",
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Right,
+                    modifier = Modifier.width(100.dp)
+                )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        LazyColumn() {
+        Spacer(modifier = Modifier.height(2.dp))
+        LazyColumn(modifier = Modifier
+            .padding(start = 5.dp, end = 5.dp)
+        ) {
             items(testData.size) {
                 val index = it
                 Row(modifier = Modifier
@@ -88,26 +106,45 @@ fun GameVsBotScreen(navController: NavHostController) {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(2.dp))
         Column(horizontalAlignment = Alignment.Start) {
             Row(modifier = Modifier
                 .fillMaxWidth()
             ) {
-                Text(text = "Белые")
-                Text(text = "0.5")
-                Text(text = "02:39")
+                Text(text = "Белые",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.width(170.dp)
+                )
+                Text(text = "0.5",
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.width(100.dp)
+                )
+                Text(text = "02:39",
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Right,
+                    modifier = Modifier.width(100.dp)
+                )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
-        Column(horizontalAlignment = Alignment.Start) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
+        Spacer(modifier = Modifier.height(2.dp))
+        Column( horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+                modifier = Modifier
             ) {
                 DrawButton(onSettingsClick = {
                     drawState = true
                 })
                 DefeatButton(onSettingsClick = {
                     defeatState = true
+                })
+                PauseButton(onSettingsClick = {
+                    pauseState = true
+                })
+                HelpButton(onSettingsClick = {
+                    helpState = true
                 })
             }
         }
@@ -138,7 +175,7 @@ fun GameVsBotScreen(navController: NavHostController) {
 @Composable
 fun PauseButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
-        Icon(Icons.Filled.Settings,
+        Icon(ImageVector.vectorResource(R.drawable.pause),
             contentDescription = stringResource(R.string.settings),
             modifier = Modifier.fillMaxSize(0.75f))}
 }
@@ -146,7 +183,7 @@ fun PauseButton(onSettingsClick: () -> Unit){
 @Composable
 fun HelpButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
-        Icon(Icons.Filled.Settings,
+        Icon(ImageVector.vectorResource(R.drawable.lamp),
             contentDescription = stringResource(R.string.settings),
             modifier = Modifier.fillMaxSize(0.75f))}
 }
@@ -154,15 +191,15 @@ fun HelpButton(onSettingsClick: () -> Unit){
 @Composable
 fun DrawButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
-        Icon(Icons.Filled.Settings,
+        Icon(ImageVector.vectorResource(R.drawable.draw),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f))}
+            modifier = Modifier.fillMaxSize(0.95f).padding(top = 3.dp))}
 }
 
 @Composable
 fun DefeatButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
-        Icon(Icons.Filled.Settings,
+        Icon(ImageVector.vectorResource(R.drawable.defeat),
             contentDescription = stringResource(R.string.settings),
             modifier = Modifier.fillMaxSize(0.75f))}
 }
@@ -173,10 +210,8 @@ fun FieldCell(modifier: Modifier, fontWeight: FontWeight, color: Color, border: 
     Text(
         text = "",
         modifier = modifier
-            .height(35.dp)
+            .height(43.dp)
             .border(1.dp, border)
-            .fillMaxHeight()
-            .fillMaxHeight()
             .background(color),
         fontWeight = fontWeight
     )
