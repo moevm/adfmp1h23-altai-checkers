@@ -50,20 +50,6 @@ fun GameVsBotScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 10.dp)) {
-        /*Column( horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
-                modifier = Modifier
-            ) {
-                PauseButton(onSettingsClick = {
-                    pauseState = true
-                })
-                HelpButton(onSettingsClick = {
-                    helpState = true
-                })
-            }
-
-        }*/
         Column( horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -177,7 +163,9 @@ fun PauseButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.pause),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f))}
+            modifier = Modifier.fillMaxSize(0.75f).size(128.dp),
+
+        )}
 }
 
 @Composable
@@ -185,7 +173,7 @@ fun HelpButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.lamp),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f))}
+            modifier = Modifier.fillMaxSize(0.75f).size(128.dp))}
 }
 
 @Composable
@@ -193,7 +181,7 @@ fun DrawButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.draw),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.95f).padding(top = 3.dp))}
+            modifier = Modifier.fillMaxSize(0.95f).padding(top = 3.dp).size(128.dp))}
 }
 
 @Composable
@@ -201,7 +189,8 @@ fun DefeatButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.defeat),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f))}
+            modifier = Modifier.fillMaxSize(0.75f)
+                .size(128.dp))}
 }
 
 
@@ -228,7 +217,11 @@ fun PauseDialog(   onDismiss: () -> Unit,
                 .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(25.dp)){
 
-                Text(text = "Игра поставлена на паузу")
+                Text(text = "Игра поставлена на паузу",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
+                )
 
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(30.dp),
@@ -255,7 +248,11 @@ fun HelpDialog(   onDismiss: () -> Unit,
                 .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(25.dp)){
 
-                Text(text = "Лучший ход в данной позиции:")
+                Text(text = "Лучший ход в данной позиции:",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
+                )
 
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(30.dp),
@@ -283,7 +280,12 @@ fun DrawDialog(   onDismiss: () -> Unit,
                 .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(25.dp)){
 
-                Text(text = "Компьютер не согласен на ничью")
+                Text(text = "Компьютер не согласен на ничью",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
+                )
+
 
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(30.dp),
@@ -310,7 +312,12 @@ fun DefeatDialog(   onDismiss: () -> Unit,
                 .padding(15.dp),
                 verticalArrangement = Arrangement.spacedBy(25.dp)){
 
-                Text(text = "Вы сдались! Повезёт в следующий раз")
+                Text(text = "Вы сдались! Повезёт в следующий раз",
+                    fontSize = 22.sp,
+                    textAlign = TextAlign.Center,
+                    color = Color.Black
+                )
+
 
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(30.dp),
