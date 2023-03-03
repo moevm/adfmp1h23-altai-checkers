@@ -1,5 +1,6 @@
 package com.example.altai_checkers.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -28,23 +29,23 @@ fun GameVsBotScreen(navController: NavHostController) {
     var helpState by remember { mutableStateOf(false) }
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
-    class Cell(val fill: Color, val border: Color)
+    class Cell(val fill: Color, val border: Color, val figure: ImageVector?)
     class Line(val cell1: Cell, val cell2: Cell, val cell3: Cell, val cell4: Cell, val cell5: Cell, val cell6: Cell, val cell7: Cell)
     val testData = listOf<Line>(
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(BlackCell, BlackCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell)),
-        Line(Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell)),
-        Line(Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell)),
-        Line(Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell)),
-        Line(Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell)),
-        Line(Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(WhiteCell, WhiteCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
-        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(WhiteCell, WhiteCell), Cell(BlackCell, BlackCell), Cell(WhiteCell, WhiteCell), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_queen)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_rook)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_bishop)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_rook)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_bishop)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_king)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.black_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.black_pawn))),
+        Line(Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null)),
+        Line(Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null)),
+        Line(Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null)),
+        Line(Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null), Cell(WhiteCell, WhiteCell, null), Cell(BlackCell, BlackCell, null)),
+        Line(Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn))),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_king)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_bishop)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_rook)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_bishop)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_rook)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
+        Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_queen)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
     )
     Column(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -82,13 +83,13 @@ fun GameVsBotScreen(navController: NavHostController) {
                 val index = it
                 Row(modifier = Modifier
                 ) {
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell1.fill, testData[index].cell1.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell2.fill, testData[index].cell2.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell3.fill, testData[index].cell3.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell4.fill, testData[index].cell4.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell5.fill, testData[index].cell5.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell6.fill, testData[index].cell6.border)
-                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell7.fill, testData[index].cell7.border)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell1.fill, testData[index].cell1.border, testData[index].cell1.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell2.fill, testData[index].cell2.border, testData[index].cell2.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell3.fill, testData[index].cell3.border, testData[index].cell3.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell4.fill, testData[index].cell4.border, testData[index].cell4.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell5.fill, testData[index].cell5.border, testData[index].cell5.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell6.fill, testData[index].cell6.border, testData[index].cell6.figure)
+                    FieldCell(Modifier.weight(2f), FontWeight.Normal, testData[index].cell7.fill, testData[index].cell7.border, testData[index].cell7.figure)
                 }
             }
         }
@@ -163,7 +164,9 @@ fun PauseButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.pause),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f).size(128.dp),
+            modifier = Modifier
+                .fillMaxSize(0.75f)
+                .size(128.dp),
 
         )}
 }
@@ -173,7 +176,9 @@ fun HelpButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.lamp),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f).size(128.dp))}
+            modifier = Modifier
+                .fillMaxSize(0.75f)
+                .size(128.dp))}
 }
 
 @Composable
@@ -181,7 +186,10 @@ fun DrawButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.draw),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.95f).padding(top = 3.dp).size(128.dp))}
+            modifier = Modifier
+                .fillMaxSize(0.95f)
+                .padding(top = 3.dp)
+                .size(128.dp))}
 }
 
 @Composable
@@ -189,21 +197,31 @@ fun DefeatButton(onSettingsClick: () -> Unit){
     IconButton(onClick = onSettingsClick){
         Icon(ImageVector.vectorResource(R.drawable.defeat),
             contentDescription = stringResource(R.string.settings),
-            modifier = Modifier.fillMaxSize(0.75f)
+            modifier = Modifier
+                .fillMaxSize(0.75f)
                 .size(128.dp))}
 }
 
 
 @Composable
-fun FieldCell(modifier: Modifier, fontWeight: FontWeight, color: Color, border: Color) {
-    Text(
-        text = "",
-        modifier = modifier
-            .height(43.dp)
-            .border(1.dp, border)
-            .background(color),
-        fontWeight = fontWeight
-    )
+fun FieldCell(modifier: Modifier, fontWeight: FontWeight, color: Color, border: Color, figure: ImageVector?) {
+    if (figure === null){
+        Text(
+            text = "",
+            modifier = modifier
+                .height(43.dp)
+                .border(1.dp, border)
+                .background(color),
+            fontWeight = fontWeight
+        )
+    }
+    else {
+        Image(imageVector = figure, contentDescription = "Фигура",
+            modifier = modifier
+                .height(43.dp)
+                .border(1.dp, border)
+                .background(color))
+    }
 }
 
 @Composable
@@ -326,7 +344,7 @@ fun DefeatDialog(   onDismiss: () -> Unit,
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)) {
-                        Text(text = "Вернуться в начальное меню",
+                        Text(text = "Вернуться в начало",
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center) } }
             }
