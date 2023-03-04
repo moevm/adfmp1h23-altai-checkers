@@ -33,15 +33,28 @@ val TimeSettingsSaver = listSaver<TimeSettings, Any>(
     restore = { TimeSettings(it[0] as Boolean, it[1] as Int, it[2] as Int) }
 )
 
+data class NamesSettings(val player1: String, val player2: String)
+
+val PlayerNamesSaver = listSaver<NamesSettings, Any>(
+    save = { listOf(it.player1, it.player2) },
+    restore = { NamesSettings(it[0] as String, it[1] as String) }
+)
+
 @Composable
 fun MainScreen(navController: NavHostController) {
     var isDialogShown by remember {mutableStateOf(false)}
     var gamemode by remember {mutableStateOf("")}
-    var gameWithBotSettings = rememberSaveable(stateSaver = TimeSettingsSaver) {
+    var gameWithBotTimeSettings = rememberSaveable(stateSaver = TimeSettingsSaver) {
         mutableStateOf(TimeSettings(true, 5, 3))
     }
-    var gameWithFriendSettings = rememberSaveable(stateSaver = TimeSettingsSaver) {
+    var gameWithFriendTimeSettings = rememberSaveable(stateSaver = TimeSettingsSaver) {
         mutableStateOf(TimeSettings(false, 10, 4))
+    }
+    var gameWithBotNameSettings = rememberSaveable(stateSaver = PlayerNamesSaver) {
+        mutableStateOf(NamesSettings("Игрок 1", "Компьютер"))
+    }
+    var gameWithFriendNameSettings = rememberSaveable(stateSaver = PlayerNamesSaver) {
+        mutableStateOf(NamesSettings("Игрок 1", "Игрок 2"))
     }
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -79,13 +92,17 @@ fun MainScreen(navController: NavHostController) {
 
     if (isDialogShown) {
         if (gamemode == "bot") {
-            SettingsDialog(currentSettings = gameWithBotSettings,
+            SettingsDialog(currentTimeSettings = gameWithBotTimeSettings,
+                           currentNamesSettings = gameWithBotNameSettings,
+                           gameMode = gamemode,
                            onDismiss = {isDialogShown = false},
                            onConfirm = {/* TODO */
                                         isDialogShown = false })
         }
         if (gamemode == "friend")
-            SettingsDialog(currentSettings = gameWithFriendSettings,
+            SettingsDialog(currentTimeSettings = gameWithFriendTimeSettings,
+                           currentNamesSettings = gameWithFriendNameSettings,
+                           gameMode = gamemode,
                            onDismiss = {isDialogShown = false},
                            onConfirm = {/* TODO */
                                         isDialogShown = false})
@@ -107,12 +124,17 @@ fun ButtonWithSettings(text: String, onClick: () -> Unit, onSettingsClick: () ->
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
+fun SettingsDialog(currentTimeSettings: MutableState<TimeSettings>,
+                   currentNamesSettings: MutableState<NamesSettings>,
+                   gameMode: String,
                    onDismiss: () -> Unit,
                    onConfirm: () -> Unit) {
-    var state by remember { mutableStateOf(currentSettings.value.mode) }
-    var time by remember { mutableStateOf(currentSettings.value.time)}
-    var addition by remember { mutableStateOf(currentSettings.value.addition)}
+    var state by remember { mutableStateOf(currentTimeSettings.value.mode) }
+    var time by remember { mutableStateOf(currentTimeSettings.value.time)}
+    var addition by remember { mutableStateOf(currentTimeSettings.value.addition)}
+
+    var player1 by remember { mutableStateOf(currentNamesSettings.value.player1) }
+    var player2 by remember { mutableStateOf(currentNamesSettings.value.player2) }
 
     Dialog(onDismissRequest = { onDismiss() },
            properties = DialogProperties(usePlatformDefaultWidth = false)) {
@@ -120,7 +142,28 @@ fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
             Column(modifier = Modifier
                 .fillMaxWidth(0.95f)
                 .padding(15.dp),
-                   verticalArrangement = Arrangement.spacedBy(25.dp)){
+                verticalArrangement = Arrangement.spacedBy(25.dp)
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.player_1_name))
+                    TextField(
+                        value = player1,
+                        placeholder = { Text("Игрок 1")},
+                        onValueChange = { player1 = it },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                    )
+                }
+                if (gameMode == "friend") {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.player_2_name))
+                        TextField(
+                            value = player2,
+                            placeholder = { Text("Игрок 2")},
+                            onValueChange = { player2 = it },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                        )
+                    }
+                }
                 Column(Modifier.selectableGroup()) {
                     Row(){
                         RadioButton(selected = state,
@@ -160,8 +203,9 @@ fun SettingsDialog(currentSettings: MutableState<TimeSettings>,
                                      textAlign = TextAlign.Center) }
                     Button(onClick = {/* TODO */
                                       onConfirm() },
-                           modifier = Modifier.fillMaxWidth()
-                                              .weight(1f)) {
+                           modifier = Modifier
+                               .fillMaxWidth()
+                               .weight(1f)) {
                                 Text(text = stringResource(R.string.confirm),
                                      fontWeight = FontWeight.Bold,
                                      textAlign = TextAlign.Center) } }
