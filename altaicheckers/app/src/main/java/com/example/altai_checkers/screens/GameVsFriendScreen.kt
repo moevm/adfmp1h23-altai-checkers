@@ -2,7 +2,6 @@ package com.example.altai_checkers.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
@@ -12,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -31,6 +32,7 @@ fun GameVsFriendScreen(navController: NavHostController) {
     var drawState2 by remember { mutableStateOf(false) }
     var defeatState1 by remember { mutableStateOf(false) }
     var defeatState2 by remember { mutableStateOf(false) }
+    val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
     class Cell(val fill: Color, val border: Color, val figure: ImageVector?)
     class Line(val cell1: Cell, val cell2: Cell, val cell3: Cell, val cell4: Cell, val cell5: Cell, val cell6: Cell, val cell7: Cell)
     val testData = listOf<Line>(
@@ -49,14 +51,13 @@ fun GameVsFriendScreen(navController: NavHostController) {
         Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_rook)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
         Line(Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(BlackCell, BlackCell, ImageVector.vectorResource(R.drawable.white_queen)), Cell(WhiteCell, WhiteCell, ImageVector.vectorResource(R.drawable.white_pawn)), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null), Cell(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background, null)),
     )
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+    Column(modifier = Modifier
             .fillMaxSize()) {
-        Column( horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+            Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .rotate(180f)
+                    .height(height / 23)
             ) {
                 DrawButtonVSFriend2(onSettingsClick = {
                     drawState2 = true
@@ -67,78 +68,113 @@ fun GameVsFriendScreen(navController: NavHostController) {
                 ReverseButtonVSFriend2(onSettingsClick = {
 
                 })
+        }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(height / 23)
+                    .rotate(180f)
+            ) {
+                Text(
+                    text = "Чёрные",
+                    fontSize = 22.sp,
+                )
+                Text(
+                    text = "0.5",
+                    fontSize = 18.sp,
+                )
+                Text(
+                    text = "02:58",
+                    fontSize = 30.sp,
+                )
             }
 
-        }
-        Column( horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxWidth(1f)
-        ) {
-            Row(modifier = Modifier
-                .rotate(180f)
+            LazyColumn(
+                modifier = Modifier
+                    .padding(start = width / 20, end = width / 20)
             ) {
-                Text(text = "Чёрные",
-                    fontSize = 22.sp,
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.width(170.dp)
-                )
-                Text(text = "0.5",
-                    fontSize = 18.sp,
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.width(100.dp)
-                )
-                Text(text = "02:58",
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Right,
-                    modifier = Modifier.width(100.dp)
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(2.dp))
-        LazyColumn(modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp)
-        ) {
-            items(testData.size) {
-                val index = it
-                Row(modifier = Modifier
-                ) {
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell1.fill, testData[index].cell1.border, testData[index].cell1.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell2.fill, testData[index].cell2.border, testData[index].cell2.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell3.fill, testData[index].cell3.border, testData[index].cell3.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell4.fill, testData[index].cell4.border, testData[index].cell4.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell5.fill, testData[index].cell5.border, testData[index].cell5.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell6.fill, testData[index].cell6.border, testData[index].cell6.figure)
-                    FieldCellVSFriend(Modifier.weight(2f), FontWeight.Normal, testData[index].cell7.fill, testData[index].cell7.border, testData[index].cell7.figure)
+                items(testData.size) {
+                    val index = it
+                    Row(
+                        modifier = Modifier
+                    ) {
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell1.fill,
+                            testData[index].cell1.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell2.fill,
+                            testData[index].cell2.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell3.fill,
+                            testData[index].cell3.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell4.fill,
+                            testData[index].cell4.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell5.fill,
+                            testData[index].cell5.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell6.fill,
+                            testData[index].cell6.figure,
+                            height
+                        )
+                        FieldCellVSFriend(
+                            Modifier.weight(2f),
+                            FontWeight.Normal,
+                            testData[index].cell7.fill,
+                            testData[index].cell7.figure,
+                            height
+                        )
+                    }
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(2.dp))
-        Column(horizontalAlignment = Alignment.Start) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(height / 23)
             ) {
-                Text(text = "Белые",
+                Text(
+                    text = "Белые",
                     fontSize = 22.sp,
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.width(170.dp)
                 )
-                Text(text = "0.5",
+                Text(
+                    text = "0.5",
                     fontSize = 18.sp,
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.width(100.dp)
                 )
-                Text(text = "02:39",
+                Text(
+                    text = "02:39",
                     fontSize = 30.sp,
-                    textAlign = TextAlign.Right,
-                    modifier = Modifier.width(100.dp)
                 )
             }
-        }
-        Spacer(modifier = Modifier.height(2.dp))
-        Column( horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(50.dp),
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .height(height / 23)
             ) {
                 DrawButtonVSFriend1(onSettingsClick = {
                     drawState1 = true
@@ -149,13 +185,11 @@ fun GameVsFriendScreen(navController: NavHostController) {
                 ReverseButtonVSFriend1(onSettingsClick = {
 
                 })
-                PauseButtonVSFriend (onSettingsClick = {
+                PauseButtonVSFriend(onSettingsClick = {
                     pauseState = true
                 })
             }
-        }
     }
-
     if (pauseState){
         PauseDialogVSFriend( onDismiss = { },
             onConfirm = {pauseState = false})
@@ -192,13 +226,12 @@ fun GameVsFriendScreen(navController: NavHostController) {
 }
 
 @Composable
-fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, color: Color, border: Color, figure: ImageVector?) {
+fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, color: Color, figure: ImageVector?, height: Dp) {
     if (figure === null){
         Text(
             text = "",
             modifier = modifier
-                .height(40.dp)
-                .border(1.dp, border)
+                .height(height / (35 / 2))
                 .background(color),
             fontWeight = fontWeight
         )
@@ -206,8 +239,7 @@ fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, color: Color, 
     else {
         Image(imageVector = figure, contentDescription = "Фигура",
             modifier = modifier
-                .height(40.dp)
-                .border(1.dp, border)
+                .height(height / (35 / 2))
                 .background(color))
     }
 }
