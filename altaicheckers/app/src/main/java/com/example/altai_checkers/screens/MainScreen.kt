@@ -60,66 +60,100 @@ fun MainScreen(navController: NavHostController) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
                verticalArrangement = Arrangement.SpaceEvenly) {
-            Box(modifier = Modifier.width(300.dp)){
-                Text(stringResource(R.string.title),
-                     fontSize = 48.sp,
-                     lineHeight = 50.sp,
-                     textAlign = TextAlign.Center)}
-            ButtonWithSettings(stringResource(R.string.play_with_bot),
-                               onClick = { navController.navigate("GameVsBotScreen") },
-                               onSettingsClick = {
-                                   gamemode = "bot"
-                                   isDialogShown = true})
-            ButtonWithSettings(stringResource(R.string.play_with_friend),
-                               onClick = {navController.navigate("GameVsFriendScreen")},
-                               onSettingsClick = {
-                                   gamemode = "friend"
-                                   isDialogShown = true})
-            Button(onClick = { navController.navigate("StatisticsScreen") },
-                   modifier = Modifier
-                       .width(300.dp)
-                       .height(80.dp),
-                   content = {Text(stringResource(R.string.statistics),
-                              fontSize = 24.sp)})
-            Button(onClick = { navController.navigate("AboutScreen") },
-                   modifier = Modifier
-                       .width(300.dp)
-                       .height(80.dp),
-                   content = {Text(stringResource(R.string.about),
-                   fontSize = 24.sp)})
+            Box(modifier = Modifier.width(300.dp)) {
+                Text(
+                    stringResource(R.string.title),
+                    fontSize = 48.sp,
+                    lineHeight = 50.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+            ButtonWithSettings(
+                stringResource(R.string.play_with_bot),
+                onClick = {
+                    gamemode = "bot"
+                    isDialogShown = true
+                }
+            )
+            ButtonWithSettings(
+                stringResource(R.string.play_with_friend),
+                onClick = {
+                    gamemode = "friend"
+                    isDialogShown = true
+                }
+            )
+            Button(
+                onClick = { navController.navigate("StatisticsScreen") },
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(80.dp),
+                content = {
+                    Text(
+                        stringResource(R.string.statistics),
+                        fontSize = 24.sp
+                    )
+                }
+            )
+            Button(
+                onClick = { navController.navigate("AboutScreen") },
+                modifier = Modifier
+                    .width(300.dp)
+                    .height(80.dp),
+                content = {
+                    Text(
+                        stringResource(R.string.about),
+                        fontSize = 24.sp
+                    )
+                }
+            )
         }
     }
 
     if (isDialogShown) {
         if (gamemode == "bot") {
-            SettingsDialog(currentTimeSettings = gameWithBotTimeSettings,
-                           currentNamesSettings = gameWithBotNameSettings,
-                           gameMode = gamemode,
-                           onDismiss = {isDialogShown = false},
-                           onConfirm = {/* TODO */
-                                        isDialogShown = false })
+            SettingsDialog(
+                currentTimeSettings = gameWithBotTimeSettings,
+                currentNamesSettings = gameWithBotNameSettings,
+                gameMode = gamemode,
+                onDismiss = { isDialogShown = false },
+                onConfirm = {
+                    isDialogShown = false
+                    navController.navigate("GameVsBotScreen")
+                }
+            )
         }
         if (gamemode == "friend")
-            SettingsDialog(currentTimeSettings = gameWithFriendTimeSettings,
-                           currentNamesSettings = gameWithFriendNameSettings,
-                           gameMode = gamemode,
-                           onDismiss = {isDialogShown = false},
-                           onConfirm = {/* TODO */
-                                        isDialogShown = false})
+            SettingsDialog(
+                currentTimeSettings = gameWithFriendTimeSettings,
+                currentNamesSettings = gameWithFriendNameSettings,
+                gameMode = gamemode,
+                onDismiss = { isDialogShown = false },
+                onConfirm = {
+                    isDialogShown = false
+                    navController.navigate("GameVsFriendScreen")
+                }
+            )
     }
 }
 
 @Composable
-fun ButtonWithSettings(text: String, onClick: () -> Unit, onSettingsClick: () -> Unit) {
-    Button(onClick = onClick,
-           modifier = Modifier
-               .width(300.dp)
-               .height(80.dp),
-           content = {Text(text, fontSize = 24.sp)
-                      IconButton(onClick = onSettingsClick){
-                          Icon(Icons.Filled.Settings,
-                               contentDescription = stringResource(R.string.settings),
-                               modifier = Modifier.fillMaxSize(0.75f))}})
+fun ButtonWithSettings(text: String, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .width(300.dp)
+            .height(80.dp),
+        content = {
+            Text(text, fontSize = 24.sp)
+//            IconButton(onClick = onSettingsClick) {
+//                Icon(
+//                    Icons.Filled.Settings,
+//                    contentDescription = stringResource(R.string.settings),
+//                    modifier = Modifier.fillMaxSize(0.75f)
+//                )
+//            }
+        }
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -201,12 +235,11 @@ fun SettingsDialog(currentTimeSettings: MutableState<TimeSettings>,
                                 Text(text = stringResource(R.string.cancel),
                                      fontWeight = FontWeight.Bold,
                                      textAlign = TextAlign.Center) }
-                    Button(onClick = {/* TODO */
-                                      onConfirm() },
+                    Button(onClick = { onConfirm() },
                            modifier = Modifier
                                .fillMaxWidth()
                                .weight(1f)) {
-                                Text(text = stringResource(R.string.confirm),
+                                Text(text = stringResource(R.string.start),
                                      fontWeight = FontWeight.Bold,
                                      textAlign = TextAlign.Center) } }
             }
