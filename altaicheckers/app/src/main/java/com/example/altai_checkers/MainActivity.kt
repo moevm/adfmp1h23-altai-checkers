@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "MainScreen") {
                         composable("MainScreen") { MainScreen(navController) }
 //                        composable("GameVsBotScreen") { GameVsBotScreen(navController) }
-                        composable("GameVsFriendScreen") { GameVsFriendScreen(navController) }
+//                        composable("GameVsFriendScreen") { GameVsFriendScreen(navController) }
                         composable("StatisticsScreen") { StatisticsScreen(navController) }
                         composable("AboutScreen") { AboutScreen(navController) }
                     }

@@ -9,8 +9,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.listSaver
@@ -26,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
-import com.example.altai_checkers.GameVsBotActivity
+import com.example.altai_checkers.GameActivity
 import com.example.altai_checkers.R
 
 data class TimeSettings(val mode: Boolean, val time: Int, val addition: Int)
@@ -120,12 +118,13 @@ fun MainScreen(navController: NavHostController) {
                 currentNamesSettings = gameWithBotNameSettings,
                 gameMode = gamemode,
                 onDismiss = { isDialogShown = false },
-                onConfirm = {
+                onConfirm = { player1: String, player2: String ->
                     isDialogShown = false
 //                    navController.navigate("GameVsBotScreen")
-                    val intent = Intent(context, GameVsBotActivity::class.java)
-                    intent.putExtra("player1", gameWithBotNameSettings.value.player1)
-                    intent.putExtra("player2", gameWithBotNameSettings.value.player2)
+                    val intent = Intent(context, GameActivity::class.java)
+                    intent.putExtra("gameType", "VSBot")
+                    intent.putExtra("player1", player1)
+                    intent.putExtra("player2", player2)
                     context.startActivity(intent)
                 }
             )
@@ -136,9 +135,14 @@ fun MainScreen(navController: NavHostController) {
                 currentNamesSettings = gameWithFriendNameSettings,
                 gameMode = gamemode,
                 onDismiss = { isDialogShown = false },
-                onConfirm = {
+                onConfirm = { player1: String, player2: String ->
                     isDialogShown = false
-                    navController.navigate("GameVsFriendScreen")
+//                    navController.navigate("GameVsFriendScreen")
+                    val intent = Intent(context, GameActivity::class.java)
+                    intent.putExtra("gameType", "VSFriend")
+                    intent.putExtra("player1", player1)
+                    intent.putExtra("player2", player2)
+                    context.startActivity(intent)
                 }
             )
     }
@@ -170,7 +174,7 @@ fun SettingsDialog(currentTimeSettings: MutableState<TimeSettings>,
                    currentNamesSettings: MutableState<NamesSettings>,
                    gameMode: String,
                    onDismiss: () -> Unit,
-                   onConfirm: () -> Unit) {
+                   onConfirm: (player1: String, player2: String) -> Unit) {
     var state by remember { mutableStateOf(currentTimeSettings.value.mode) }
     var time by remember { mutableStateOf(currentTimeSettings.value.time)}
     var addition by remember { mutableStateOf(currentTimeSettings.value.addition)}
@@ -243,7 +247,7 @@ fun SettingsDialog(currentTimeSettings: MutableState<TimeSettings>,
                                 Text(text = stringResource(R.string.cancel),
                                      fontWeight = FontWeight.Bold,
                                      textAlign = TextAlign.Center) }
-                    Button(onClick = { onConfirm() },
+                    Button(onClick = { onConfirm(player1, player2) },
                            modifier = Modifier
                                .fillMaxWidth()
                                .weight(1f)) {

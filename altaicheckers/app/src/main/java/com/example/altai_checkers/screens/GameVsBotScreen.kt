@@ -21,8 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavHostController
-import com.example.altai_checkers.GameVsBotActivity
+import com.example.altai_checkers.GameActivity
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
@@ -37,9 +36,10 @@ fun GameVsBotScreen(game: Game) {
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    val game = Game("VSBot", Field(), "player1", "Computer")
+//    val game = Game("VSBot", Field(), "player1", "Computer")
     game.Start()
-    val activity = LocalContext.current as GameVsBotActivity
+    val activity = LocalContext.current as GameActivity
+
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
