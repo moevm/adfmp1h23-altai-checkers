@@ -1,7 +1,6 @@
 package com.example.altai_checkers.screens
 
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
@@ -18,7 +17,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
-import com.example.altai_checkers.GameVsBotActivity
 import com.example.altai_checkers.R
 
 data class TimeSettings(val mode: Boolean, val time: Int, val addition: Int)
@@ -59,7 +56,6 @@ fun MainScreen(navController: NavHostController) {
     var gameWithFriendNameSettings = rememberSaveable(stateSaver = PlayerNamesSaver) {
         mutableStateOf(NamesSettings("Игрок 1", "Игрок 2"))
     }
-    val context = LocalContext.current
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -122,11 +118,7 @@ fun MainScreen(navController: NavHostController) {
                 onDismiss = { isDialogShown = false },
                 onConfirm = {
                     isDialogShown = false
-//                    navController.navigate("GameVsBotScreen")
-                    val intent = Intent(context, GameVsBotActivity::class.java)
-                    intent.putExtra("player1", gameWithBotNameSettings.value.player1)
-                    intent.putExtra("player2", gameWithBotNameSettings.value.player2)
-                    context.startActivity(intent)
+                    navController.navigate("GameVsBotScreen")
                 }
             )
         }

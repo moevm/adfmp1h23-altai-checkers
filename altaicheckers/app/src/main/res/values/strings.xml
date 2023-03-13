@@ -15,5 +15,4 @@
     <string name="back_button">Вернуться назад</string>
     <string name="about_info">Приложение `Алтайские шашки` создано в рамках предмета `Разработка приложений для мобильных платформ`.</string>
     <string name="developers">Разработчики:\nКуршев Е.О. @jendos2001\nЛойконен М.Р. @Miha1l\nМахаличев Н.А. @mahalichev</string>
-    <string name="title_activity_game_vs_bot">GameVsBotActivity</string>
 </resources>

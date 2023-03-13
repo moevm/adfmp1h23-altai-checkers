@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
-import com.example.altai_checkers.GameVsBotActivity
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
@@ -31,7 +29,7 @@ import com.example.altai_checkers.items.Game
 
 
 @Composable
-fun GameVsBotScreen(game: Game) {
+fun GameVsBotScreen(navController: NavHostController) {
     var pauseState by remember { mutableStateOf(false) }
     var helpState by remember { mutableStateOf(false) }
     var drawState by remember { mutableStateOf(false) }
@@ -39,7 +37,6 @@ fun GameVsBotScreen(game: Game) {
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
     val game = Game("VSBot", Field(), "player1", "Computer")
     game.Start()
-    val activity = LocalContext.current as GameVsBotActivity
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -131,8 +128,7 @@ fun GameVsBotScreen(game: Game) {
         DefeatDialog( onDismiss = { },
             onConfirm = {
                 defeatState = false
-                //navController.popBackStack()
-                activity.finish()
+                navController.popBackStack()
             })
     }
 
