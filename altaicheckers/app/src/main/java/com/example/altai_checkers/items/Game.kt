@@ -1,19 +1,30 @@
 package com.example.altai_checkers.items
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 
-class Game(val gameType: String, private val field: Field, val player1: String, val player2: String) {
-    var isStart = false
+class Game():
+    ViewModel() {
+
+    private val _uiState = MutableStateFlow(GameUIState())
+    init {
+        _uiState.value = GameUIState()
+    }
+    private var isStart = false
+
+    @SuppressLint("StateFlowValueCalledInComposition")
     @Composable
     fun Start(){
-        if(!isStart){
-            println(111111)
-            field.CreateField()
+        if (!isStart){
+            _uiState.value.field.CreateField()
             isStart = true
         }
+
     }
 
     fun getField(): Field{
-        return this.field
+        return this._uiState.value.field
     }
 }

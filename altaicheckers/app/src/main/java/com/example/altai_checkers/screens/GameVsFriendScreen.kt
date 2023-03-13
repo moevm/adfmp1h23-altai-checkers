@@ -21,24 +21,27 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
-import com.example.altai_checkers.ui.theme.BlackCell
-import com.example.altai_checkers.ui.theme.WhiteCell
 
 @Composable
-fun GameVsFriendScreen(navController: NavHostController) {
+fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel()) {
     var pauseState by remember { mutableStateOf(false) }
     var drawState1 by remember { mutableStateOf(false) }
     var drawState2 by remember { mutableStateOf(false) }
     var defeatState1 by remember { mutableStateOf(false) }
     var defeatState2 by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    val game = Game("VSBot", Field(), "player1", "Computer")
     game.Start()
+    if(game.getField().showDialog.value)
+        game.getField().SetPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+    else{
+        game.getField().UnsetPossibleMovies(game.getField().getSelectFields())
+    }
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -181,13 +184,18 @@ fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, cell: Cell, fi
         )
     }
     else {
-        Image(imageVector = cell.figure.imageVector, contentDescription = "Фигура",
+        Image(imageVector = cell.figure.imageVector!!, contentDescription = "Фигура",
             modifier = modifier
                 .height(height / (35 / 2))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    println(cell.getPossibleMoveFields(field).size)
-                    println(cell.getPossibleMoveFields(field))
+                    if (field.selectCoord == 0) {
+                        field.selectCoord = cell.coord
+                        field.showDialog.value = !field.showDialog.value
+                    } else if (field.selectCoord == cell.coord) {
+                        field.selectCoord = 0
+                        field.showDialog.value = !field.showDialog.value
+                    }
                 })
         )
     }

@@ -2,6 +2,7 @@ package com.example.altai_checkers.items
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import com.example.altai_checkers.R
@@ -27,12 +28,16 @@ import com.example.altai_checkers.ui.theme.WhiteCell
 
  */
 
-open class Field {
+class Field() {
     private lateinit var cells: List<Cell>
     private var allWhiteFortressFiguresPlayed = false // менять у фигур startFortress на false, как выставили из крепости
     private var allBlackFortressFiguresPlayed = false
     private var emptyWhiteFortress = false
     private var emptyBlackFortress = false
+    val showDialog = mutableStateOf(false)
+    private var selectFields: MutableList<Int> = mutableListOf()
+    var selectCoord: Int = 0
+
     @Composable
     fun CreateField(){
             this.cells = listOf(
@@ -193,6 +198,25 @@ open class Field {
         }
         if (!whiteFlag) allWhiteFortressFiguresPlayed = true
 
+    }
+    @Composable
+    fun SetPossibleMovies(fields: MutableList<Int>){
+        this.selectFields = fields
+        for (i in fields){
+            cells[i].figure.imageVector = ImageVector.vectorResource(R.drawable.possible_move)
+        }
+    }
+
+    @Composable
+    fun UnsetPossibleMovies(fields: MutableList<Int>){
+        this.selectFields = mutableListOf()
+        for (i in fields){
+            cells[i].figure.imageVector = null
+        }
+    }
+
+    fun getSelectFields(): MutableList<Int> {
+        return this.selectFields
     }
 }
 
