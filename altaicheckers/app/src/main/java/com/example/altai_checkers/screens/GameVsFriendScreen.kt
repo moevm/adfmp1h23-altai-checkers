@@ -27,6 +27,7 @@ import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
+import com.example.altai_checkers.items.GameTimer
 
 @Composable
 fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel()) {
@@ -75,10 +76,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:58",
-                    fontSize = 30.sp,
-                )
+                GameTimer(179, 0, false)
             }
 
         LazyColumn(modifier = Modifier
@@ -112,10 +110,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:39",
-                    fontSize = 30.sp,
-                )
+                GameTimer(178, 0, true)
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

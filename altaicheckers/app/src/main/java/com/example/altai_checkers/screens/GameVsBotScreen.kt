@@ -23,10 +23,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
-import com.example.altai_checkers.items.Cell
-import com.example.altai_checkers.items.Field
-import com.example.altai_checkers.items.Game
-
+import com.example.altai_checkers.items.*
 
 
 @Composable
@@ -57,10 +54,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:58",
-                    fontSize = 30.sp,
-                )
+                GameTimer(178, 0, false)
             }
             LazyColumn(modifier = Modifier
                 .padding(start = width / 40, end = width / 40)
@@ -92,10 +86,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:39",
-                    fontSize = 30.sp,
-                )
+                GameTimer(178, 0, true)
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
