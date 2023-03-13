@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,24 +21,24 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.example.altai_checkers.GameActivity
+import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
+import com.example.altai_checkers.ui.theme.BlackCell
+import com.example.altai_checkers.ui.theme.WhiteCell
 
 @Composable
-fun GameVsFriendScreen(game: Game) {
+fun GameVsFriendScreen(navController: NavHostController) {
     var pauseState by remember { mutableStateOf(false) }
     var drawState1 by remember { mutableStateOf(false) }
     var drawState2 by remember { mutableStateOf(false) }
     var defeatState1 by remember { mutableStateOf(false) }
     var defeatState2 by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-//    val game = Game("VSBot", Field(), "player1", "Computer")
+    val game = Game("VSBot", Field(), "player1", "Computer")
     game.Start()
-    val activity = LocalContext.current as GameActivity
-
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -143,32 +142,28 @@ fun GameVsFriendScreen(game: Game) {
         DrawDialogVSFriend1( onRefuse = { drawState1 = false },
             onConfirm = {
                 drawState1 = false
-//                navController.popBackStack()
-                activity.finish()
+                navController.popBackStack()
             })
     }
     if (drawState2){
         DrawDialogVSFriend2( onRefuse = { drawState2 = false },
             onConfirm = {
                 drawState2 = false
-//                navController.popBackStack()
-                activity.finish()
+                navController.popBackStack()
             })
     }
     if (defeatState1){
         DefeatDialogVSFriend1( onDismiss = { },
             onConfirm = {
                 defeatState1 = false
-//                navController.navigate("MainScreen")
-                activity.finish()
+                navController.navigate("MainScreen")
             })
     }
     if (defeatState2){
         DefeatDialogVSFriend2( onDismiss = { },
             onConfirm = {
                 defeatState2 = false
-//                navController.navigate("MainScreen")
-                activity.finish()
+                navController.navigate("MainScreen")
             })
     }
 
