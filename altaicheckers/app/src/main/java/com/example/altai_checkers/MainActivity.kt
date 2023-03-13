@@ -18,8 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AltaicheckersTheme {
-                Surface(modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "MainScreen") {
                         composable("MainScreen") { MainScreen(navController) }
