@@ -29,6 +29,7 @@ import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.items.GameTimer
 
+
 @Composable
 fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel()) {
     var pauseState by remember { mutableStateOf(false) }
