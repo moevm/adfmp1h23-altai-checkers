@@ -1,12 +1,8 @@
 package com.example.altai_checkers.items
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import com.example.altai_checkers.R
 import com.example.altai_checkers.ui.theme.BlackCell
+import com.example.altai_checkers.ui.theme.Theme
 import com.example.altai_checkers.ui.theme.WhiteCell
 
 /*
@@ -28,6 +24,21 @@ import com.example.altai_checkers.ui.theme.WhiteCell
 
  */
 
+/*
+0 - ничего
+1 - черная пешка
+2 - черный слон
+3 - черная ладья
+4 - черный ферзь
+5 - черный король
+6 - белая пешка
+7 - белый слон
+8 - белая ладья
+9 - белый ферзь
+10 - белый король
+11 - точка
+ */
+
 class Field() {
     private lateinit var cells: List<Cell>
     private var allWhiteFortressFiguresPlayed = false // менять у фигур startFortress на false, как выставили из крепости
@@ -38,107 +49,106 @@ class Field() {
     private var selectFields: MutableList<Int> = mutableListOf()
     var selectCoord: Int = 0
 
-    @Composable
-    fun CreateField(){
+    fun createField(){
             this.cells = listOf(
-                Cell(0, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(1, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(2, "cell", BlackCell, Figure("black_pawn", true, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(3, "cell", WhiteCell, Figure("black_queen", true, ImageVector.vectorResource(R.drawable.black_queen))),
-                Cell(4, "cell", BlackCell, Figure("black_pawn", true, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(5, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(6, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(7, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(8, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(9, "cell", WhiteCell, Figure("black_pawn", true, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(10, "cell", BlackCell, Figure("black_rook", true, ImageVector.vectorResource(R.drawable.black_rook))),
-                Cell(11, "cell", WhiteCell, Figure("black_pawn", true, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(12, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(13, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(14, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(15, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(16, "cell", BlackCell, Figure("black_bishop", true, ImageVector.vectorResource(R.drawable.black_bishop))),
-                Cell(17, "cell", WhiteCell, Figure("black_rook", true, ImageVector.vectorResource(R.drawable.black_rook))),
-                Cell(18, "cell", BlackCell, Figure("black_bishop", true, ImageVector.vectorResource(R.drawable.black_bishop))),
-                Cell(19, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(20, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(21, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(22, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(23, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(24, "cell", BlackCell, Figure("black_king", true, ImageVector.vectorResource(R.drawable.black_king))),
-                Cell(25, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(26, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(27, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(28, "cell", BlackCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(29, "cell", WhiteCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(30, "cell", BlackCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(31, "cell", WhiteCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(32, "cell", BlackCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(33, "cell", WhiteCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(34, "cell", BlackCell, Figure("black_pawn", false, ImageVector.vectorResource(R.drawable.black_pawn))),
-                Cell(35, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(36, "cell", BlackCell, Figure(null, false, null)),
-                Cell(37, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(38, "cell", BlackCell, Figure(null, false, null)),
-                Cell(39, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(40, "cell", BlackCell, Figure(null, false, null)),
-                Cell(41, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(42, "cell", BlackCell, Figure(null, false, null)),
-                Cell(43, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(44, "cell", BlackCell, Figure(null, false, null)),
-                Cell(45, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(46, "cell", BlackCell, Figure(null, false, null)),
-                Cell(47, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(48, "cell", BlackCell, Figure(null, false, null)),
-                Cell(49, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(50, "cell", BlackCell, Figure(null, false, null)),
-                Cell(51, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(52, "cell", BlackCell, Figure(null, false, null)),
-                Cell(53, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(54, "cell", BlackCell, Figure(null, false, null)),
-                Cell(55, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(56, "cell", BlackCell, Figure(null, false, null)),
-                Cell(57, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(58, "cell", BlackCell, Figure(null, false, null)),
-                Cell(59, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(60, "cell", BlackCell, Figure(null, false, null)),
-                Cell(61, "cell", WhiteCell, Figure(null, false, null)),
-                Cell(62, "cell", BlackCell, Figure(null, false, null)),
-                Cell(63, "cell", WhiteCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(64, "cell", BlackCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(65, "cell", WhiteCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(66, "cell", BlackCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(67, "cell", WhiteCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(68, "cell", BlackCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(69, "cell", WhiteCell, Figure("white_pawn", false, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(70, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(71, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(72, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(73, "cell", WhiteCell, Figure("white_king", true, ImageVector.vectorResource(R.drawable.white_king))),
-                Cell(74, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(75, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(76, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(77, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(78, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(79, "cell", WhiteCell, Figure("white_bishop", true, ImageVector.vectorResource(R.drawable.white_bishop))),
-                Cell(80, "cell", BlackCell, Figure("white_rook", true, ImageVector.vectorResource(R.drawable.white_rook))),
-                Cell(81, "cell", WhiteCell, Figure("white_bishop", true, ImageVector.vectorResource(R.drawable.white_bishop))),
-                Cell(82, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(83, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(84, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(85, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(86, "cell", BlackCell, Figure("white_pawn", true, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(87, "cell", WhiteCell, Figure("white_rook", true, ImageVector.vectorResource(R.drawable.white_rook))),
-                Cell(88, "cell", BlackCell, Figure("white_pawn", true, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(89, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(90, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(91, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(92, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(93, "cell", WhiteCell, Figure("white_pawn", true, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(94, "cell", BlackCell, Figure("white_queen", true, ImageVector.vectorResource(R.drawable.white_queen))),
-                Cell(95, "cell", WhiteCell, Figure("white_pawn", true, ImageVector.vectorResource(R.drawable.white_pawn))),
-                Cell(96, "background", MaterialTheme.colorScheme.background, Figure(null, false, null)),
-                Cell(97, "background",  MaterialTheme.colorScheme.background, Figure(null, false, null))
+                Cell(0, "background",  Theme, Figure(null, false, 0)),
+                Cell(1, "background", Theme, Figure(null, false, 0)),
+                Cell(2, "cell", BlackCell, Figure("black_pawn", true, 1)),
+                Cell(3, "cell", WhiteCell, Figure("black_queen", true, 4)),
+                Cell(4, "cell", BlackCell, Figure("black_pawn", true, 1)),
+                Cell(5, "background",  Theme, Figure(null, false, 0)),
+                Cell(6, "background", Theme, Figure(null, false, 0)),
+                Cell(7, "background",  Theme, Figure(null, false, 0)),
+                Cell(8, "background", Theme, Figure(null, false, 0)),
+                Cell(9, "cell", WhiteCell, Figure("black_pawn", true, 1)),
+                Cell(10, "cell", BlackCell, Figure("black_rook", true, 3)),
+                Cell(11, "cell", WhiteCell, Figure("black_pawn", true, 1)),
+                Cell(12, "background",  Theme, Figure(null, false, 0)),
+                Cell(13, "background", Theme, Figure(null, false, 0)),
+                Cell(14, "background",  Theme, Figure(null, false, 0)),
+                Cell(15, "background", Theme, Figure(null, false, 0)),
+                Cell(16, "cell", BlackCell, Figure("black_bishop", true, 2)),
+                Cell(17, "cell", WhiteCell, Figure("black_rook", true, 3)),
+                Cell(18, "cell", BlackCell, Figure("black_bishop", true, 2)),
+                Cell(19, "background",  Theme, Figure(null, false, 0)),
+                Cell(20, "background", Theme, Figure(null, false, 0)),
+                Cell(21, "background",  Theme, Figure(null, false, 0)),
+                Cell(22, "background", Theme, Figure(null, false, 0)),
+                Cell(23, "background",  Theme, Figure(null, false, 0)),
+                Cell(24, "cell", BlackCell, Figure("black_king", true, 5)),
+                Cell(25, "background",  Theme, Figure(null, false, 0)),
+                Cell(26, "background", Theme, Figure(null, false, 0)),
+                Cell(27, "background",  Theme, Figure(null, false, 0)),
+                Cell(28, "cell", BlackCell, Figure("black_pawn", false, 1)),
+                Cell(29, "cell", WhiteCell, Figure("black_pawn", false, 1)),
+                Cell(30, "cell", BlackCell, Figure("black_pawn", false, 1)),
+                Cell(31, "cell", WhiteCell, Figure("black_pawn", false, 1)),
+                Cell(32, "cell", BlackCell, Figure("black_pawn", false, 1)),
+                Cell(33, "cell", WhiteCell, Figure("black_pawn", false, 1)),
+                Cell(34, "cell", BlackCell, Figure("black_pawn", false, 1)),
+                Cell(35, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(36, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(37, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(38, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(39, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(40, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(41, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(42, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(43, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(44, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(45, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(46, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(47, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(48, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(49, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(50, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(51, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(52, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(53, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(54, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(55, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(56, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(57, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(58, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(59, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(60, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(61, "cell", WhiteCell, Figure(null, false, 0)),
+                Cell(62, "cell", BlackCell, Figure(null, false, 0)),
+                Cell(63, "cell", WhiteCell, Figure("white_pawn", false, 6)),
+                Cell(64, "cell", BlackCell, Figure("white_pawn", false, 6)),
+                Cell(65, "cell", WhiteCell, Figure("white_pawn", false, 6)),
+                Cell(66, "cell", BlackCell, Figure("white_pawn", false, 6)),
+                Cell(67, "cell", WhiteCell, Figure("white_pawn", false, 6)),
+                Cell(68, "cell", BlackCell, Figure("white_pawn", false, 6)),
+                Cell(69, "cell", WhiteCell, Figure("white_pawn", false, 6)),
+                Cell(70, "background",  Theme, Figure(null, false, 0)),
+                Cell(71, "background", Theme, Figure(null, false, 0)),
+                Cell(72, "background",  Theme, Figure(null, false, 0)),
+                Cell(73, "cell", WhiteCell, Figure("white_king", true, 10)),
+                Cell(74, "background",  Theme, Figure(null, false, 0)),
+                Cell(75, "background", Theme, Figure(null, false, 0)),
+                Cell(76, "background",  Theme, Figure(null, false, 0)),
+                Cell(77, "background", Theme, Figure(null, false, 0)),
+                Cell(78, "background",  Theme, Figure(null, false, 0)),
+                Cell(79, "cell", WhiteCell, Figure("white_bishop", true, 7)),
+                Cell(80, "cell", BlackCell, Figure("white_rook", true, 8)),
+                Cell(81, "cell", WhiteCell, Figure("white_bishop", true, 7)),
+                Cell(82, "background", Theme, Figure(null, false, 0)),
+                Cell(83, "background",  Theme, Figure(null, false, 0)),
+                Cell(84, "background", Theme, Figure(null, false, 0)),
+                Cell(85, "background",  Theme, Figure(null, false, 0)),
+                Cell(86, "cell", BlackCell, Figure("white_pawn", true, 6)),
+                Cell(87, "cell", WhiteCell, Figure("white_rook", true, 8)),
+                Cell(88, "cell", BlackCell, Figure("white_pawn", true, 6)),
+                Cell(89, "background", Theme, Figure(null, false, 0)),
+                Cell(90, "background",  Theme, Figure(null, false, 0)),
+                Cell(91, "background", Theme, Figure(null, false, 0)),
+                Cell(92, "background",  Theme, Figure(null, false, 0)),
+                Cell(93, "cell", WhiteCell, Figure("white_pawn", true, 6)),
+                Cell(94, "cell", BlackCell, Figure("white_queen", true, 9)),
+                Cell(95, "cell", WhiteCell, Figure("white_pawn", true, 6)),
+                Cell(96, "background", Theme, Figure(null, false, 0)),
+                Cell(97, "background",  Theme, Figure(null, false, 0))
             )
 
     }
@@ -199,19 +209,16 @@ class Field() {
         if (!whiteFlag) allWhiteFortressFiguresPlayed = true
 
     }
-    @Composable
-    fun SetPossibleMovies(fields: MutableList<Int>){
+    fun setPossibleMovies(fields: MutableList<Int>){
         this.selectFields = fields
         for (i in fields){
-            cells[i].figure.imageVector = ImageVector.vectorResource(R.drawable.possible_move)
+            cells[i].figure.figureId = 11
         }
     }
-
-    @Composable
-    fun UnsetPossibleMovies(fields: MutableList<Int>){
+    fun unsetPossibleMovies(fields: MutableList<Int>){
         this.selectFields = mutableListOf()
         for (i in fields){
-            cells[i].figure.imageVector = null
+            cells[i].figure.figureId = 0
         }
     }
 
