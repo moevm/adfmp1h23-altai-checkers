@@ -5,6 +5,8 @@
     <string name="without_addition">Без добавления</string>
     <string name="player_1_name">Имя первого игрока</string>
     <string name="player_2_name">Имя второго игрока</string>
+    <string name="time">Время</string>
+    <string name="addition_time">Добавочное время</string>
     <string name="start">Начать</string>
     <string name="cancel">Отмена</string>
     <string name="play_with_bot">Играть с ботом</string>
