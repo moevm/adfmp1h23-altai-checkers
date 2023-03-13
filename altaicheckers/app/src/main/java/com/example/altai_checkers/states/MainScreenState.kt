@@ -5,5 +5,6 @@ data class MainScreenState(
     val secondPlayer: String = "player2",
     val withAddition: Boolean = false,
     val time: Int = 20,
-    val additionTime: Int = 5
+    val additionTime: Int = 5,
+    val error: String = ""
 )

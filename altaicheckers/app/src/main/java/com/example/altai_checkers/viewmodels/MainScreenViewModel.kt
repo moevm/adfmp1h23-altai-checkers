@@ -37,4 +37,26 @@ class MainScreenViewModel: ViewModel() {
         if (value != null) additionTime = value
         _uiState.update{MainScreenState -> MainScreenState.copy(additionTime = additionTime)}
     }
+
+    fun setError(error: String) {
+        _uiState.update{MainScreenState -> MainScreenState.copy(error = error)}
+    }
+
+    fun checkBeforeStart(gamemode: String, onPass: () -> Unit, onError: () -> Unit) {
+        if (_uiState.value.time == 0) setError("Установите время, отличное от нуля")
+        if (_uiState.value.firstPlayer == "") setError("Имя пользователя не может быть пустым")
+        if (gamemode == "friend") {
+            if (_uiState.value.firstPlayer == _uiState.value.secondPlayer)
+                setError("Введите разные имена пользователей")
+            if (_uiState.value.secondPlayer == "") setError("Имя пользователя не может быть пустым")
+        }
+        if (gamemode == "bot")
+            if (_uiState.value.firstPlayer == "Computer")
+                setError("Имя пользователя \"Computer\" занято. Используйте другое имя пользователя")
+        if (_uiState.value.withAddition)
+            if (_uiState.value.additionTime == 0) setError("Установите добавочное время, отличное от нуля")
+
+        if (_uiState.value.error != "") onError()
+        else onPass()
+    }
 }

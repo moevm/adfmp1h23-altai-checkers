@@ -26,7 +26,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
-import com.example.altai_checkers.states.MainScreenState
 import com.example.altai_checkers.viewmodels.MainScreenViewModel
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -34,6 +33,7 @@ import com.example.altai_checkers.viewmodels.MainScreenViewModel
 fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel) {
     val uiState by viewModel.uiState.collectAsState()
     var showGameSettingsDialog by remember {mutableStateOf(false)}
+    var showErrorDialog by remember {mutableStateOf(false)}
     var gamemode by remember {mutableStateOf("")}
     var onConfirm by remember {mutableStateOf({})}
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -57,9 +57,14 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                         showGameSettingsDialog = true
                         gamemode = "bot"
                         onConfirm = {
-                            showGameSettingsDialog = false
-                            navController.navigate("GameVsBotScreen")
-                        }},
+                            viewModel.checkBeforeStart(gamemode,
+                                {
+                                    showGameSettingsDialog = false
+                                    navController.navigate("GameVsBotScreen")
+                                },
+                                { showErrorDialog = true })
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(80.dp),
@@ -75,9 +80,14 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                         showGameSettingsDialog = true
                         gamemode = "friend"
                         onConfirm = {
-                            showGameSettingsDialog = false
-                            navController.navigate("GameVsFriendScreen")
-                        }},
+                            viewModel.checkBeforeStart(gamemode,
+                                {
+                                    showGameSettingsDialog = false
+                                    navController.navigate("GameVsFriendScreen")
+                                },
+                                { showErrorDialog = true })
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(80.dp),
@@ -120,25 +130,30 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
             }
         }
         if (showGameSettingsDialog)
-            Dialog(onDismissRequest = { showGameSettingsDialog = false },
-                properties = DialogProperties(usePlatformDefaultWidth = false)) {
+            Dialog(
+                onDismissRequest = { showGameSettingsDialog = false },
+                properties = DialogProperties(usePlatformDefaultWidth = false)
+            ) {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-                    Column(modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(20.dp),
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .padding(20.dp),
                         verticalArrangement = Arrangement.spacedBy(25.dp)
                     ) {
-                        Column(verticalArrangement = Arrangement.spacedBy(10.dp)){
+                        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.spacedBy(5.dp)
                             ) {
-                                Text(stringResource(R.string.first_player_name),
+                                Text(
+                                    stringResource(R.string.first_player_name),
                                     fontSize = 22.sp,
-                                    textAlign = TextAlign.Center)
+                                    textAlign = TextAlign.Center
+                                )
                                 TextField(
                                     value = uiState.firstPlayer,
-                                    placeholder = { Text("Игрок 1")},
+                                    placeholder = { Text("Игрок 1") },
                                     onValueChange = { viewModel.updatePlayerName(it, 1) },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                                     modifier = Modifier.fillMaxWidth()
@@ -149,12 +164,14 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.spacedBy(5.dp)
                                 ) {
-                                    Text(stringResource(R.string.second_player_name),
+                                    Text(
+                                        stringResource(R.string.second_player_name),
                                         fontSize = 22.sp,
-                                        textAlign = TextAlign.Center)
+                                        textAlign = TextAlign.Center
+                                    )
                                     TextField(
                                         value = uiState.secondPlayer,
-                                        placeholder = { Text("Игрок 2")},
+                                        placeholder = { Text("Игрок 2") },
                                         onValueChange = { viewModel.updatePlayerName(it, 2) },
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                                         modifier = Modifier.fillMaxWidth()
@@ -163,28 +180,37 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                         }
 
                         Column(Modifier.selectableGroup()) {
-                            Row(){
+                            Row {
                                 RadioButton(selected = uiState.withAddition,
                                     onClick = { viewModel.setWithAddition(true) })
-                                Text(stringResource(R.string.with_addition),
-                                    fontSize = 22.sp) }
-                            Row() {
+                                Text(
+                                    stringResource(R.string.with_addition),
+                                    fontSize = 22.sp
+                                )
+                            }
+                            Row {
                                 RadioButton(selected = !uiState.withAddition,
                                     onClick = { viewModel.setWithAddition(false) })
-                                Text(stringResource(R.string.without_addition),
-                                    fontSize = 22.sp) } }
+                                Text(
+                                    stringResource(R.string.without_addition),
+                                    fontSize = 22.sp
+                                )
+                            }
+                        }
 
                         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.spacedBy(5.dp)
                             ) {
-                                Text(stringResource(R.string.time),
+                                Text(
+                                    stringResource(R.string.time),
                                     fontSize = 22.sp,
-                                    textAlign = TextAlign.Center)
+                                    textAlign = TextAlign.Center
+                                )
                                 TextField(
                                     value = uiState.time.toString(),
-                                    placeholder = { Text("Введите время")},
+                                    placeholder = { Text("Введите время") },
                                     onValueChange = { viewModel.updateTime(it.toIntOrNull()) },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                     modifier = Modifier.fillMaxWidth()
@@ -195,12 +221,14 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.spacedBy(5.dp)
                                 ) {
-                                    Text(stringResource(R.string.addition_time),
+                                    Text(
+                                        stringResource(R.string.addition_time),
                                         fontSize = 22.sp,
-                                        textAlign = TextAlign.Center)
+                                        textAlign = TextAlign.Center
+                                    )
                                     TextField(
                                         value = uiState.additionTime.toString(),
-                                        placeholder = { Text("Введите добавочное время")},
+                                        placeholder = { Text("Введите добавочное время") },
                                         onValueChange = { viewModel.updateAdditionTime(it.toIntOrNull()) },
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                         modifier = Modifier.fillMaxWidth()
@@ -208,10 +236,12 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                                 }
                         }
 
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp),
-                            horizontalArrangement = Arrangement.SpaceAround) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp),
+                            horizontalArrangement = Arrangement.SpaceAround
+                        ) {
                             IconButton(
                                 onClick = { showGameSettingsDialog = false },
                                 modifier = Modifier.size(60.dp)
@@ -238,5 +268,28 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                     }
                 }
             }
+        if (showErrorDialog)
+            AlertDialog(
+                onDismissRequest = {
+                    showErrorDialog = false
+                    viewModel.setError("")
+                },
+                title = {
+                    Text(text = "Неверные данные")
+                },
+                text = {
+                    Text(uiState.error)
+                },
+                confirmButton = {
+                    Button(
+
+                        onClick = {
+                            showErrorDialog = false
+                            viewModel.setError("")
+                        }) {
+                        Text("Ок")
+                    }
+                }
+            )
     }
 }
