@@ -14,7 +14,7 @@ class MainScreenViewModelUnitTest {
         viewModel.updatePlayerName("TestSecondName", 2)
 
         val currentUiState = viewModel.uiState.value
-        TestCase.assertEquals(currentUiState.firstPlayer, "TestFirstNam")
+        TestCase.assertEquals(currentUiState.firstPlayer, "TestFirstName")
         TestCase.assertEquals(currentUiState.secondPlayer, "TestSecondName")
     }
 
