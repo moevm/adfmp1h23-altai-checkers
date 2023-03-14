@@ -237,4 +237,23 @@ class StartGameTest {
         field.setCells(correctCells)
         assertTrue(gameField == field)
     }
+
+    @Test
+    fun checkTimeAddition() {
+        game.pauseTimer(1)
+        val timeBefore = game.uiState.value.totalTime1
+        game.increaseTimer(1)
+        val diff = game.uiState.value.totalTime1 - timeBefore
+        assertEquals(diff, 5)
+    }
+
+    @Test
+    fun checkTimerSwitch() {
+        var activeTimer = game.activeTimerNumber
+        assertEquals(activeTimer, 1)
+        game.switchActiveTimer()
+        activeTimer = game.activeTimerNumber
+        game.pauseTimer(activeTimer)
+        assertEquals(activeTimer, 2)
+    }
 }
