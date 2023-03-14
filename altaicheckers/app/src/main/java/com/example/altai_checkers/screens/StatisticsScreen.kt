@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,34 +19,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.BackButton
+import com.example.altai_checkers.viewmodels.StatisticsScreenViewModel
 
 @Composable
-fun StatisticsScreen(navController: NavHostController) {
-
-    // Тестовые данные
-    class Game(val player1: String, val player2: String, val score: String)
-    val testData = listOf<Game>(
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Игрок 2", "0:2"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Игрок 2", "0:2"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Игрок 2", "0:2"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Игрок 2", "0:2"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-        Game("Игрок 1", "Игрок 2", "0:2"),
-        Game("Игрок 1", "Компьютер", "Ничья"),
-    )
+fun StatisticsScreen(navController: NavHostController, viewModel: StatisticsScreenViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
     Row(horizontalArrangement = Arrangement.Start){
         BackButton(navController)
     }
@@ -55,15 +34,15 @@ fun StatisticsScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
         Column(horizontalAlignment = Alignment.Start) {
             Text(
-                text="Победы: 0 (0%)",
+                text=String.format("Победы: %d (%.2f%c)", uiState.winCount, viewModel.getPercentage("win"), '%'),
                 fontSize = 18.sp
             )
             Text(
-                text="Ничьи: 0 (0%)",
+                text=String.format("Ничьи: %d (%.2f%c)", uiState.drawCount, viewModel.getPercentage("draw"), '%'),
                 fontSize = 18.sp
             )
             Text(
-                text="Поражения: 0 (0%)",
+                text=String.format("Поражения: %d (%.2f%c)", uiState.loseCount, viewModel.getPercentage("lose"), '%'),
                 fontSize = 18.sp
             )
         }
@@ -80,15 +59,15 @@ fun StatisticsScreen(navController: NavHostController) {
                 }
             }
 
-            items(testData.size) {
+            items(uiState.entries.size) {
                 val index = it
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .background(color = Color.White)
                 ) {
-                    Cell(Modifier.weight(2f), testData[index].player1, FontWeight.Normal)
-                    Cell(Modifier.weight(2f), testData[index].player2, FontWeight.Normal)
-                    Cell(Modifier.weight(1f), testData[index].score, FontWeight.Normal)
+                    Cell(Modifier.weight(2f), uiState.entries[index].firstPlayer, FontWeight.Normal)
+                    Cell(Modifier.weight(2f), uiState.entries[index].secondPlayer, FontWeight.Normal)
+                    Cell(Modifier.weight(1f), uiState.entries[index].score, FontWeight.Normal)
                 }
             }
         }

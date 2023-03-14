@@ -1,9 +1,9 @@
 package com.example.altai_checkers.items
 
+
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,22 +19,13 @@ class Game():
     private var countDown1: CountDownTimer? = null
     private var countDown2: CountDownTimer? = null
     var activeTimerNumber: Int = 0
-
-
-    init {
-        _uiState.value = GameUIState()
-    }
     private var isStart = false
-
-    @SuppressLint("StateFlowValueCalledInComposition")
-    @Composable
-    fun Start(){
-        if (!isStart){
-            _uiState.value.field.CreateField()
-            isStart = true
-            startTimer1()
-        }
-
+    
+    init {
+        _uiState.value.field.createField()
+        //_uiState.value = GameUIState()
+        isStart = true
+        startTimer1()
     }
 
     fun getField(): Field{
