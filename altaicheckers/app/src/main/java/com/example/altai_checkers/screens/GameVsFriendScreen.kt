@@ -36,11 +36,11 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     var defeatState1 by remember { mutableStateOf(false) }
     var defeatState2 by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    game.Start()
+    //game.Start()
     if(game.getField().showDialog.value)
-        game.getField().SetPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
     else{
-        game.getField().UnsetPossibleMovies(game.getField().getSelectFields())
+        game.getField().unsetPossibleMovies(game.getField().getSelectFields())
     }
     Column(modifier = Modifier
             .fillMaxSize()) {
@@ -174,7 +174,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
 
 @Composable
 fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, cell: Cell, field: Field, height: Dp) {
-    if (cell.figure.imageVector === null){
+    if (cell.figure.figureId == 0){
         Text(
             text = "",
             modifier = modifier
@@ -184,7 +184,19 @@ fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, cell: Cell, fi
         )
     }
     else {
-        Image(imageVector = cell.figure.imageVector!!, contentDescription = "Фигура",
+        val figures = mapOf(6 to ImageVector.vectorResource(R.drawable.white_pawn),
+            7 to ImageVector.vectorResource(R.drawable.white_bishop),
+            8 to ImageVector.vectorResource(R.drawable.white_rook),
+            9 to ImageVector.vectorResource(R.drawable.white_queen),
+            10 to ImageVector.vectorResource(R.drawable.white_king),
+            1 to ImageVector.vectorResource(R.drawable.black_pawn),
+            2 to ImageVector.vectorResource(R.drawable.black_bishop),
+            3 to ImageVector.vectorResource(R.drawable.black_rook),
+            4 to ImageVector.vectorResource(R.drawable.black_queen),
+            5 to ImageVector.vectorResource(R.drawable.black_king),
+            11 to ImageVector.vectorResource(R.drawable.possible_move)
+        )
+        Image(imageVector = figures[cell.figure.figureId]!!, contentDescription = "Фигура",
             modifier = modifier
                 .height(height / (35 / 2))
                 .background(cell.fill)
