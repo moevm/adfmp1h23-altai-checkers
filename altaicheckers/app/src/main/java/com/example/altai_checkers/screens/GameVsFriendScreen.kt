@@ -27,6 +27,8 @@ import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
+import com.example.altai_checkers.items.GameTimer
+
 
 @Composable
 fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel()) {
@@ -42,6 +44,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     else{
         game.getField().unsetPossibleMovies(game.getField().getSelectFields())
     }
+    val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -75,10 +78,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:58",
-                    fontSize = 30.sp,
-                )
+                GameTimer(uiState.totalTime2)
             }
 
         LazyColumn(modifier = Modifier
@@ -112,10 +112,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                Text(
-                    text = "02:39",
-                    fontSize = 30.sp,
-                )
+                GameTimer(uiState.totalTime1)
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
