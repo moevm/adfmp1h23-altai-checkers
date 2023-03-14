@@ -39,6 +39,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     else{
         game.getField().UnsetPossibleMovies(game.getField().getSelectFields())
     }
+    val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -54,7 +55,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(178, 0, false)
+                GameTimer(uiState.totalTime2)
             }
             LazyColumn(modifier = Modifier
                 .padding(start = width / 40, end = width / 40)
@@ -86,7 +87,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(178, 0, true)
+                GameTimer(uiState.totalTime1)
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -109,23 +110,31 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     }
 
     if (pauseState){
-        PauseDialog( onDismiss = { },
-                     onConfirm = {pauseState = false})
+        PauseDialog(
+            onDismiss = { },
+            onConfirm = {pauseState = false}
+        )
     }
     if (helpState){
-        HelpDialog( onDismiss = { },
-                    onConfirm = {helpState = false})
+        HelpDialog(
+            onDismiss = { },
+            onConfirm = {helpState = false}
+        )
     }
     if (drawState){
-        DrawDialog( onDismiss = { },
-            onConfirm = {drawState = false})
+        DrawDialog(
+            onDismiss = { },
+            onConfirm = {drawState = false}
+        )
     }
     if (defeatState){
-        DefeatDialog( onDismiss = { },
+        DefeatDialog(
+            onDismiss = { },
             onConfirm = {
                 defeatState = false
                 navController.popBackStack()
-            })
+            }
+        )
     }
 
 }

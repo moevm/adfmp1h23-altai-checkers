@@ -44,6 +44,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     else{
         game.getField().UnsetPossibleMovies(game.getField().getSelectFields())
     }
+    val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
             .fillMaxSize()) {
             Row(horizontalArrangement = Arrangement.SpaceBetween,
@@ -77,7 +78,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(179, 0, false)
+                GameTimer(uiState.totalTime2)
             }
 
         LazyColumn(modifier = Modifier
@@ -111,7 +112,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(178, 0, true)
+                GameTimer(uiState.totalTime1)
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
