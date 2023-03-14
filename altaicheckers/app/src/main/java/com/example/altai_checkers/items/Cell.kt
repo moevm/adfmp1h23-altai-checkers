@@ -1,7 +1,6 @@
 package com.example.altai_checkers.items
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 
 class Cell(val coord: Int, val cellType: String, val fill: Color, val figure: Figure) {
 
@@ -27,7 +26,20 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, val figure: Fi
                     if (field.getCells()[coord - 7].figure.type == null) possibleFields.add(coord - 7)
                     if (field.getCells()[coord - 8].figure.type == null && coord - 8 >= 42) possibleFields.add(coord - 8)
                     if (field.getCells()[coord - 6].figure.type == null && coord - 6 <= 48) possibleFields.add(coord - 6)
-
+                }
+                if (coord in 42 .. 48){
+                    if (field.getCells()[coord - 7].figure.type == null) possibleFields.add(coord - 7)
+                    if (field.getCells()[coord - 8].figure.type == null && coord - 8 >= 35) possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 6].figure.type == null && coord - 6 <= 41) possibleFields.add(coord - 6)
+                    if (field.getCells()[coord + 1].figure.type == null && coord + 1 <= 48) possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 1].figure.type == null && coord - 1 >= 42) possibleFields.add(coord - 6)
+                }
+                if (coord in 35 .. 41){
+                    if (field.getCells()[coord - 7].figure.type == null) possibleFields.add(coord - 7)
+                    if (field.getCells()[coord - 8].figure.type == null && coord - 8 >= 28) possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 6].figure.type == null && coord - 6 <= 34) possibleFields.add(coord - 6)
+                    if (field.getCells()[coord + 1].figure.type == null && coord + 1 <= 41) possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 1].figure.type == null && coord - 1 >= 35) possibleFields.add(coord - 6)
                 }
             }
         }
