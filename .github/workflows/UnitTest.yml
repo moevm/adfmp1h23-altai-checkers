@@ -14,7 +14,10 @@ jobs:
           java-version: 1.8
 
       - name: Unit Test
-        run: ./gradlew testDebugUnitTest
+        run: |
+          cd altaicheckers
+          chmod +x gradlew
+          ./gradlew testDebugUnitTest
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
