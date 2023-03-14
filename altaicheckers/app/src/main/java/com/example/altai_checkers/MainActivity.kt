@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.altai_checkers.screens.*
 import com.example.altai_checkers.ui.theme.AltaicheckersTheme
 import com.example.altai_checkers.viewmodels.MainScreenViewModel
+import com.example.altai_checkers.viewmodels.StatisticsScreenViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,8 @@ class MainActivity : ComponentActivity() {
             AltaicheckersTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
-                    val mainScreenViewModel: MainScreenViewModel = MainScreenViewModel()
+                    val mainScreenViewModel = MainScreenViewModel()
+                    val statisticsScreenViewModel = StatisticsScreenViewModel()
                     NavHost(navController = navController, startDestination = "MainScreen") {
                         composable("MainScreen") {
                             MainScreen(
@@ -30,7 +32,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("GameVsBotScreen") { GameVsBotScreen(navController) }
                         composable("GameVsFriendScreen") { GameVsFriendScreen(navController) }
-                        composable("StatisticsScreen") { StatisticsScreen(navController) }
+                        composable("StatisticsScreen") {
+                            StatisticsScreen(
+                                navController,
+                                statisticsScreenViewModel
+                            )
+                        }
                         composable("AboutScreen") { AboutScreen(navController) }
                     }
                 }
