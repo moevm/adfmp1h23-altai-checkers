@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val BlackCell = Color(red = 186, green = 139, blue = 99)
 val WhiteCell = Color(red = 240, green = 224, blue = 183)
+val Theme = Color(red = 255, green = 245, blue = 238)
