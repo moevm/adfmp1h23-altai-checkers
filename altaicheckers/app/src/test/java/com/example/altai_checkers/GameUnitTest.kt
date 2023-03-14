@@ -1,6 +1,7 @@
 package com.example.altai_checkers
 
 import com.example.altai_checkers.items.Cell
+import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Figure
 import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.ui.theme.BlackCell
@@ -13,6 +14,7 @@ import org.junit.Test
 class StartGameTest {
     private val game = Game()
 
+    var field = Field()
     var correctCells = listOf(
         Cell(0, "background",  Theme, Figure(null, false, 0)),
         Cell(1, "background", Theme, Figure(null, false, 0)),
@@ -115,20 +117,14 @@ class StartGameTest {
     )
     @Test
     fun checkStartPosition() {
-        val gameField = game.getField().getCells()
-        for (i in correctCells.indices){
-            assertEquals(correctCells[i].coord, gameField[i].coord)
-            assertEquals(correctCells[i].cellType, gameField[i].cellType)
-            assertEquals(correctCells[i].fill, gameField[i].fill)
-            assertEquals(correctCells[i].figure.type, gameField[i].figure.type)
-            assertEquals(correctCells[i].figure.startFortress, gameField[i].figure.startFortress)
-            assertEquals(correctCells[i].figure.figureId, gameField[i].figure.figureId)
-        }
+        val gameField = game.getField()
+        field.setCells(correctCells)
+        assertTrue(gameField == field)
     }
 
     @Test
     fun checkPossiblePosition() {
-        val correctCells = listOf(
+        val correctCells1 = listOf(
             Cell(0, "background",  Theme, Figure(null, false, 0)),
             Cell(1, "background", Theme, Figure(null, false, 0)),
             Cell(2, "cell", BlackCell, Figure("black_pawn", true, 1)),
@@ -229,28 +225,16 @@ class StartGameTest {
             Cell(97, "background",  Theme, Figure(null, false, 0))
         )
         game.getField().setPossibleMovies(game.getField().getCells()[66].getPossibleMoveFields(game.getField()))
-        val gameField = game.getField().getCells()
-        for (i in correctCells.indices){
-            assertEquals(correctCells[i].coord, gameField[i].coord)
-            assertEquals(correctCells[i].cellType, gameField[i].cellType)
-            assertEquals(correctCells[i].fill, gameField[i].fill)
-            assertEquals(correctCells[i].figure.type, gameField[i].figure.type)
-            assertEquals(correctCells[i].figure.startFortress, gameField[i].figure.startFortress)
-            assertEquals(correctCells[i].figure.figureId, gameField[i].figure.figureId)
-        }
+        val gameField = game.getField()
+        field.setCells(correctCells1)
+        assertTrue(gameField == field)
     }
 
     @Test
     fun checkWithoutChangePosition() {
         game.getField().setPossibleMovies(game.getField().getCells()[73].getPossibleMoveFields(game.getField()))
-        val gameField = game.getField().getCells()
-        for (i in correctCells.indices){
-            assertEquals(correctCells[i].coord, gameField[i].coord)
-            assertEquals(correctCells[i].cellType, gameField[i].cellType)
-            assertEquals(correctCells[i].fill, gameField[i].fill)
-            assertEquals(correctCells[i].figure.type, gameField[i].figure.type)
-            assertEquals(correctCells[i].figure.startFortress, gameField[i].figure.startFortress)
-            assertEquals(correctCells[i].figure.figureId, gameField[i].figure.figureId)
-        }
+        val gameField = game.getField()
+        field.setCells(correctCells)
+        assertTrue(gameField == field)
     }
 }

@@ -9,11 +9,9 @@ class Game():
     private val _uiState = MutableStateFlow(GameUIState())
     private var isStart = false
     init {
-        _uiState.value = GameUIState()
-        if (!isStart){
-            _uiState.value.field.createField()
-            isStart = true
-        }
+        _uiState.value.field.createField()
+        //_uiState.value = GameUIState()
+        isStart = true
     }
 
     fun getField(): Field{

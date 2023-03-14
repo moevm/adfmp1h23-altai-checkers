@@ -225,5 +225,25 @@ class Field() {
     fun getSelectFields(): MutableList<Int> {
         return this.selectFields
     }
+
+    fun setCells(cells: List<Cell>){
+        this.cells = cells
+    }
+
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return true
+        if (o == null || javaClass != o.javaClass) return false
+        val that: Field = o as Field
+        println(that.cells[0].coord)
+        for (i in this.cells.indices){
+            if (this.cells[i].coord != that.cells[i].coord) return false
+            if (this.cells[i].cellType != that.cells[i].cellType) return false
+            if (this.cells[i].fill != that.cells[i].fill) return false
+            if (this.cells[i].figure.type != that.cells[i].figure.type) return false
+            if (this.cells[i].figure.startFortress != that.cells[i].figure.startFortress) return false
+            if (this.cells[i].figure.figureId != that.cells[i].figure.figureId) return false
+        }
+        return true
+    }
 }
 
