@@ -17,7 +17,7 @@ jobs:
         run: |
           cd altaicheckers
           chmod +x gradlew
-          ./gradlew testDebugUnitTest
+          ./gradlew test
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
