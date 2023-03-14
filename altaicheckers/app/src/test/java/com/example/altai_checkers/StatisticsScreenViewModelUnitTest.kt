@@ -42,7 +42,6 @@ class StatisticsScreenViewModelUnitTest {
     @Test
     fun getPercentageTest() {
         val viewModel = StatisticsScreenViewModel()
-        val currentUiState = viewModel.uiState.value
         TestCase.assertEquals(viewModel.getPercentage("win"), 100.0f)
         TestCase.assertEquals(viewModel.getPercentage("draw"), 0.0f)
         TestCase.assertEquals(viewModel.getPercentage("lose"), 0.0f)
