@@ -28,13 +28,13 @@ class MainScreenViewModel: ViewModel() {
 
     fun updateTime(value: Int?) {
         var time: Int = 0
-        if (value != null) time = value
+        if (value != null && value >= 0) time = value
         _uiState.update{MainScreenState -> MainScreenState.copy(time = time)}
     }
 
     fun updateAdditionTime(value: Int?) {
         var additionTime: Int = 0
-        if (value != null) additionTime = value
+        if (value != null && value >= 0) additionTime = value
         _uiState.update{MainScreenState -> MainScreenState.copy(additionTime = additionTime)}
     }
 
