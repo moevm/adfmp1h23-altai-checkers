@@ -1,4 +1,6 @@
-package com.example.altai_checkers.items
+package com.example.altai_checkers.states
+
+import com.example.altai_checkers.items.Field
 
 data class GameUIState(
     val gameType: String = "",

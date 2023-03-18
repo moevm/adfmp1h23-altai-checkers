@@ -1,10 +1,9 @@
 package com.example.altai_checkers.items
 
 
-import android.annotation.SuppressLint
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.altai_checkers.states.GameUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

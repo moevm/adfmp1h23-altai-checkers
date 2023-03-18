@@ -1,11 +1,9 @@
 package com.example.altai_checkers.items
 
-import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
 
 @Composable
 fun GameTimer(timer: Int) {

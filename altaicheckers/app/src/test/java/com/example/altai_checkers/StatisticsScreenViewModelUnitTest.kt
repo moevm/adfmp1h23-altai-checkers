@@ -5,8 +5,6 @@ import com.example.altai_checkers.viewmodels.StatisticsScreenViewModel
 import junit.framework.TestCase
 import org.junit.Test
 
-import org.junit.Assert.*
-
 class StatisticsScreenViewModelUnitTest {
     @Test
     fun addEntryTest() {

@@ -7,8 +7,8 @@ import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.ui.theme.BlackCell
 import com.example.altai_checkers.ui.theme.Theme
 import com.example.altai_checkers.ui.theme.WhiteCell
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StartGameTest {

@@ -4,8 +4,6 @@ import com.example.altai_checkers.viewmodels.MainScreenViewModel
 import junit.framework.TestCase
 import org.junit.Test
 
-import org.junit.Assert.*
-
 class MainScreenViewModelUnitTest {
     @Test
     fun updatePlayerNameTest() {
