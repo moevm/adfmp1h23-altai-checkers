@@ -31,7 +31,6 @@ import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.items.GameTimer
 
-
 @Composable
 fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) {
     var pauseState by remember { mutableStateOf(false) }
@@ -41,9 +40,9 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
     //game.Start()
     if(game.getField().showDialog.value)
-        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{
-        game.getField().unsetPossibleMovies(game.getField().getSelectFields())
+        game.getField().unsetPossibleMovies(/*game.getField().getSelectFields()*/)
     }
     val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
@@ -116,9 +115,16 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     }
 
     if (pauseState){
+        game.pauseActiveTimer()
         PauseDialog(
             onDismiss = { },
-            onConfirm = {pauseState = false}
+            onConfirm = {
+                when(game.activeTimerNumber) {
+                    1 -> game.startTimer1()
+                    2 -> game.startTimer2()
+                }
+                pauseState = false
+            }
         )
     }
     if (helpState){
@@ -218,12 +224,19 @@ fun FieldCell(modifier: Modifier, fontWeight: FontWeight, cell: Cell, field: Fie
                 .height(height / (165 / 10))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    if (field.selectCoord == 0) {
-                        field.selectCoord = cell.coord
+                    if (field.selectCoord.value == 0) {
+                        field.selectCoord.value = cell.coord
                         field.showDialog.value = !field.showDialog.value
-                    } else if (field.selectCoord == cell.coord) {
-                        field.selectCoord = 0
+                    } else if (field.selectCoord.value == cell.coord) {
+                        field.selectCoord.value = 0
                         field.showDialog.value = !field.showDialog.value
+                    } else if (cell.figure.figureId == 11) {
+                        field.unsetPossibleMovies()
+                        field.moveFigure(field.selectCoord.value, cell.coord)
+                        field.showDialog.value = !field.showDialog.value
+                    } else {
+                        field.unsetPossibleMovies()
+                        field.selectCoord.value = cell.coord
                     }
                 })
         )

@@ -240,7 +240,7 @@ class StartGameTest {
 
     @Test
     fun checkTimeAddition() {
-        game.pauseTimer(1)
+        game.pauseActiveTimer()
         val timeBefore = game.uiState.value.totalTime1
         game.increaseTimer(1)
         val diff = game.uiState.value.totalTime1 - timeBefore
@@ -253,7 +253,7 @@ class StartGameTest {
         assertEquals(activeTimer, 1)
         game.switchActiveTimer()
         activeTimer = game.activeTimerNumber
-        game.pauseTimer(activeTimer)
+        game.pauseActiveTimer()
         assertEquals(activeTimer, 2)
     }
 }

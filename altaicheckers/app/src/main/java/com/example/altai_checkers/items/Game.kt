@@ -60,7 +60,7 @@ class Game():
     }
 
     fun switchActiveTimer() {
-        pauseTimer(activeTimerNumber)
+        pauseActiveTimer()
         increaseTimer(activeTimerNumber)
         when(activeTimerNumber) {
             1 -> startTimer2()
@@ -68,8 +68,8 @@ class Game():
         }
     }
 
-    fun pauseTimer(timerNumber: Int?) {
-        when(timerNumber) {
+    fun pauseActiveTimer() {
+        when(activeTimerNumber) {
             1 -> countDown1?.cancel()
             2 -> countDown2?.cancel()
         }

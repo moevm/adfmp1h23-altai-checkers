@@ -43,9 +43,9 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
     //game.Start()
     if(game.getField().showDialog.value)
-        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{
-        game.getField().unsetPossibleMovies(game.getField().getSelectFields())
+        game.getField().unsetPossibleMovies(/*game.getField().getSelectFields()*/)
     }
     val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
@@ -201,11 +201,11 @@ fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, cell: Cell, fi
                 .height(height / (35 / 2))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    if (field.selectCoord == 0) {
-                        field.selectCoord = cell.coord
+                    if (field.selectCoord.value == 0) {
+                        field.selectCoord.value = cell.coord
                         field.showDialog.value = !field.showDialog.value
-                    } else if (field.selectCoord == cell.coord) {
-                        field.selectCoord = 0
+                    } else if (field.selectCoord.value == cell.coord) {
+                        field.selectCoord.value = 0
                         field.showDialog.value = !field.showDialog.value
                     }
                 })

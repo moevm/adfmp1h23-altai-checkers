@@ -47,7 +47,7 @@ class Field() {
     private var emptyBlackFortress = false
     val showDialog = mutableStateOf(false)
     private var selectFields: MutableList<Int> = mutableListOf()
-    var selectCoord: Int = 0
+    var selectCoord = mutableStateOf(0)
 
     fun createField(){
             this.cells = listOf(
@@ -215,11 +215,11 @@ class Field() {
             cells[i].figure.figureId = 11
         }
     }
-    fun unsetPossibleMovies(fields: MutableList<Int>){
-        this.selectFields = mutableListOf()
-        for (i in fields){
+    fun unsetPossibleMovies(/*fields: MutableList<Int>*/){
+        for (i in selectFields){
             cells[i].figure.figureId = 0
         }
+        this.selectFields = mutableListOf()
     }
 
     fun getSelectFields(): MutableList<Int> {
@@ -245,5 +245,10 @@ class Field() {
         }
         return true
     }
-}
 
+    fun moveFigure(curPosition: Int, newPosition: Int) {
+        cells[newPosition].figure = cells[curPosition].figure
+        cells[curPosition].figure = Figure(null, false, 0)
+        selectCoord.value = 0
+    }
+}
