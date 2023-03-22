@@ -380,6 +380,40 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     }
                 }
             }
+            "white_king" -> {
+                if (coord == 73) {
+                    for (i in 49..69){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    if (field.getCells()[coord - 7].figure.type == null && field.getCells()[coord - 7].cellType != "background") possibleFields.add(coord - 7)
+                    if (field.getCells()[coord - 8].figure.type == null && (coord / 7 - 1) * 7 <= coord - 8 && coord - 8 <= (coord / 7 - 1) * 7 + 6 && field.getCells()[coord - 8].cellType != "background") possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 6].figure.type == null && (coord / 7 - 1) * 7 <= coord - 6 && coord - 8 <= (coord / 7 - 1) * 7 + 6 && field.getCells()[coord - 6].cellType != "background") possibleFields.add(coord - 6)
+                    if (field.getCells()[coord + 1].figure.type == null && coord / 7 * 7 <= coord + 1 && coord + 1 <= coord / 7 * 7 + 6 && field.getCells()[coord + 1].cellType != "background") possibleFields.add(coord + 1)
+                    if (field.getCells()[coord - 1].figure.type == null && coord / 7 * 7 <= coord - 1 && coord - 1 <= coord / 7 * 7 + 6 && field.getCells()[coord - 1].cellType != "background") possibleFields.add(coord - 1)
+                    if (field.getCells()[coord + 7].figure.type == null && field.getCells()[coord + 7].cellType != "background") possibleFields.add(coord + 7)
+                    if (field.getCells()[coord + 8].figure.type == null && (coord / 7 + 1) * 7 <= coord + 8 && coord + 8 <= (coord / 7 + 1) * 7 + 6 && field.getCells()[coord + 8].cellType != "background") possibleFields.add(coord + 8)
+                    if (field.getCells()[coord + 6].figure.type == null && (coord / 7 + 1) * 7 <= coord + 6 && coord + 6 <= (coord / 7 + 1) * 7 + 6 && field.getCells()[coord + 6].cellType != "background") possibleFields.add(coord + 6)
+                }
+            }
+            "black_king" -> {
+                if (coord == 24) {
+                    for (i in 28..48){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    if (field.getCells()[coord - 7].figure.type == null && field.getCells()[coord - 7].cellType != "background") possibleFields.add(coord - 7)
+                    if (field.getCells()[coord - 8].figure.type == null && (coord / 7 - 1) * 7 <= coord - 8 && coord - 8 <= (coord / 7 - 1) * 7 + 6 && field.getCells()[coord - 8].cellType != "background") possibleFields.add(coord - 8)
+                    if (field.getCells()[coord - 6].figure.type == null && (coord / 7 - 1) * 7 <= coord - 6 && coord - 8 <= (coord / 7 - 1) * 7 + 6 && field.getCells()[coord - 6].cellType != "background") possibleFields.add(coord - 6)
+                    if (field.getCells()[coord + 1].figure.type == null && coord / 7 * 7 <= coord + 1 && coord + 1 <= coord / 7 * 7 + 6 && field.getCells()[coord + 1].cellType != "background") possibleFields.add(coord + 1)
+                    if (field.getCells()[coord - 1].figure.type == null && coord / 7 * 7 <= coord - 1 && coord - 1 <= coord / 7 * 7 + 6 && field.getCells()[coord - 1].cellType != "background") possibleFields.add(coord - 1)
+                    if (field.getCells()[coord + 7].figure.type == null && field.getCells()[coord + 7].cellType != "background") possibleFields.add(coord + 7)
+                    if (field.getCells()[coord + 8].figure.type == null && (coord / 7 + 1) * 7 <= coord + 8 && coord + 8 <= (coord / 7 + 1) * 7 + 6 && field.getCells()[coord + 8].cellType != "background") possibleFields.add(coord + 8)
+                    if (field.getCells()[coord + 6].figure.type == null && (coord / 7 + 1) * 7 <= coord + 6 && coord + 6 <= (coord / 7 + 1) * 7 + 6 && field.getCells()[coord + 6].cellType != "background") possibleFields.add(coord + 6)
+                }
+            }
 
         }
         return possibleFields
