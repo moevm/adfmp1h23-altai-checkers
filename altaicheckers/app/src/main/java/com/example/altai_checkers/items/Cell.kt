@@ -236,6 +236,151 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     }
                 }
             }
+            "white_queen" -> {
+                if (coord >= 73){ //добавить ход из своей крепости в чужую
+                    for (i in 49..69){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    var lineCoord = coord - 1
+                    while (lineCoord >= coord / 7 * 7){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else break
+                        lineCoord -= 1
+                    }
+
+                    lineCoord = coord + 1
+                    while (lineCoord <= coord / 7 * 7 + 6){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else break
+                        lineCoord += 1
+                    }
+
+                    var rowCoord = coord - 7
+                    while (rowCoord > 0){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else break
+                        rowCoord -= 7
+                    }
+
+                    rowCoord = coord + 7
+                    while (rowCoord < 98){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else break
+                        rowCoord += 7
+                    }
+
+                    var possibleCoord = coord - 6
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 6
+                    }
+
+                    possibleCoord = coord - 8
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 8
+                    }
+
+                    possibleCoord = coord + 6
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 6
+                    }
+
+                    possibleCoord = coord + 8
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 8
+                    }
+                }
+            }
+            "black_queen" -> {
+                if (coord <= 24){ //добавить ход из своей крепости в чужую
+                    for (i in 28..48){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    var lineCoord = coord - 1
+                    while (lineCoord >= coord / 7 * 7){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else break
+                        lineCoord -= 1
+                    }
+
+                    lineCoord = coord + 1
+                    while (lineCoord <= coord / 7 * 7 + 6){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else break
+                        lineCoord += 1
+                    }
+
+                    var rowCoord = coord - 7
+                    while (rowCoord > 0){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else break
+                        rowCoord -= 7
+                    }
+
+                    rowCoord = coord + 7
+                    while (rowCoord < 98){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else break
+                        rowCoord += 7
+                    }
+
+                    var possibleCoord = coord - 6
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 6
+                    }
+
+                    possibleCoord = coord - 8
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 8
+                    }
+
+                    possibleCoord = coord + 6
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 6
+                    }
+
+                    possibleCoord = coord + 8
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 8
+                    }
+                }
+            }
+
         }
         return possibleFields
     }
