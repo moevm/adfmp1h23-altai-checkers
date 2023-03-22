@@ -38,6 +38,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
+    game.initSettings()
     if(game.getField().showDialog.value)
         game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{

@@ -23,28 +23,35 @@ class Game() :
     private var isStart = false
 
     init {
-        Realm.getDefaultInstance().executeTransaction { realm ->
-            val settings = realm.where(GameSettings::class.java).findFirst()
-            if (settings != null) {
-                _uiState.update { GameUIState ->
-                    GameUIState.copy(
-                        player1 = settings.player1,
-                        player2 = settings.player2,
-                        time1 = settings.time,
-                        time2 = settings.time,
-                        additionTime = settings.addition
-                    )
-                }
-            }
-        }
         _uiState.value.field.createField()
         //_uiState.value = GameUIState()
-        isStart = true
-        startTimer1()
+        //isStart = true
+        //startTimer1()
     }
 
     fun getField(): Field {
         return this._uiState.value.field
+    }
+
+    fun initSettings() {
+        if (!isStart) {
+            Realm.getDefaultInstance().executeTransaction { realm ->
+                val settings = realm.where(GameSettings::class.java).findFirst()
+                if (settings != null) {
+                    _uiState.update { GameUIState ->
+                        GameUIState.copy(
+                            player1 = settings.player1,
+                            player2 = settings.player2,
+                            time1 = settings.time,
+                            time2 = settings.time,
+                            additionTime = settings.addition
+                        )
+                    }
+                }
+            }
+            isStart = true
+            startTimer1()
+        }
     }
 
     fun startTimer1() {

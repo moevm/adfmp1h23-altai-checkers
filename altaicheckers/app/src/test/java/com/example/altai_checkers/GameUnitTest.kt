@@ -241,15 +241,17 @@ class StartGameTest {
 
     @Test
     fun checkTimeAddition() {
+        game.startTimer1()
         game.pauseActiveTimer()
         val timeBefore = game.uiState.value.time1
         game.increaseTimer(1)
         val diff = game.uiState.value.time1 - timeBefore
-        assertEquals(diff, 5)
+        assertEquals(diff, game.uiState.value.additionTime)
     }
 
     @Test
     fun checkTimerSwitch() {
+        game.startTimer1()
         var activeTimer = game.activeTimerNumber
         assertEquals(activeTimer, 1)
         game.switchActiveTimer()
