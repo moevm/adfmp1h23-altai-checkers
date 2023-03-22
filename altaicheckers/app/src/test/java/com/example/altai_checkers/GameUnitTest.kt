@@ -1,5 +1,6 @@
 package com.example.altai_checkers
 
+import android.content.Context
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Figure
@@ -7,11 +8,66 @@ import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.ui.theme.BlackCell
 import com.example.altai_checkers.ui.theme.Theme
 import com.example.altai_checkers.ui.theme.WhiteCell
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmQuery
+import io.realm.RealmResults
+import io.realm.internal.RealmCore
+import io.realm.log.RealmLog
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers
+import org.powermock.api.mockito.PowerMockito
+import org.powermock.api.mockito.PowerMockito.mockStatic
+import org.powermock.core.classloader.annotations.PowerMockIgnore
+import org.powermock.core.classloader.annotations.PrepareForTest
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor
+import org.powermock.modules.junit4.rule.PowerMockRule
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
+import org.robolectric.annotation.Config
 
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [28])
+@PowerMockIgnore(
+    "org.mockito.*",
+    "org.robolectric.*",
+    "android.*",
+    "jdk.internal.reflect.*",
+    "androidx.*"
+)
+@SuppressStaticInitializationFor("io.realm.internal.Util")
+@PrepareForTest(
+    Realm::class,
+    RealmConfiguration::class,
+    RealmQuery::class,
+    RealmResults::class,
+    RealmCore::class,
+    RealmLog::class
+)
 class StartGameTest {
+    @Rule
+    var rule = PowerMockRule()
+    private var mockRealm: Realm? = null
+
+    @Before
+    fun setup() {
+        PowerMockito.mockStatic(RealmCore::class.java)
+        PowerMockito.mockStatic(RealmLog::class.java)
+        PowerMockito.mockStatic(Realm::class.java)
+        PowerMockito.mockStatic(RealmConfiguration::class.java)
+        Realm.init(RuntimeEnvironment.application)
+        PowerMockito.doNothing().`when`(RealmCore::class.java)
+        RealmCore.loadLibrary(ArgumentMatchers.any(Context::class.java))
+        val mockRealm = PowerMockito.mock(Realm::class.java)
+        PowerMockito.`when`(Realm.getDefaultInstance()).thenReturn(mockRealm)
+        this.mockRealm = mockRealm
+    }
 
     private val game = Game()
 
