@@ -12,6 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StartGameTest {
+
     private val game = Game()
 
     var field = Field()
@@ -241,9 +242,9 @@ class StartGameTest {
     @Test
     fun checkTimeAddition() {
         game.pauseActiveTimer()
-        val timeBefore = game.uiState.value.totalTime1
+        val timeBefore = game.uiState.value.time1
         game.increaseTimer(1)
-        val diff = game.uiState.value.totalTime1 - timeBefore
+        val diff = game.uiState.value.time1 - timeBefore
         assertEquals(diff, 5)
     }
 
