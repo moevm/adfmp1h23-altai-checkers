@@ -156,6 +156,86 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     }
                 }
             }
+            "white_bishop" -> {
+                if (coord >= 73){
+                    for (i in 49..69){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    var possibleCoord = coord - 6
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 6
+                    }
+
+                    possibleCoord = coord - 8
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 8
+                    }
+
+                    possibleCoord = coord + 6
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 6
+                    }
+
+                    possibleCoord = coord + 8
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 8
+                    }
+                }
+            }
+            "black_bishop" -> {
+                if (coord <= 24){
+                    for (i in 28..48){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    var possibleCoord = coord - 6
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 6
+                    }
+
+                    possibleCoord = coord - 8
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord -= 8
+                    }
+
+                    possibleCoord = coord + 6
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 6
+                    }
+
+                    possibleCoord = coord + 8
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else break
+                        possibleCoord += 8
+                    }
+                }
+            }
         }
         return possibleFields
     }
