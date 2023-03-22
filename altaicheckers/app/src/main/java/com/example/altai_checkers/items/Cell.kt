@@ -76,7 +76,7 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     if (field.getCells()[coord + 1].figure.type == null && coord + 1 <= 62) possibleFields.add(coord + 1)
                 }
             }
-            "white_rook" -> {
+            "white_rook" -> { //взятие всех фигур
                 if (coord >= 73){ //добавить ход из своей крепости в чужую
                     for (i in 49..69){
                         if (field.getCells()[i].figure.type == null) possibleFields.add(i)
@@ -87,6 +87,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord >= coord / 7 * 7){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("black*")) && coord / 7 * 7 <= lineCoord - 1 && lineCoord - 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord - 1].figure.type == null && field.getCells()[lineCoord - 1].cellType != "background") {
+                                possibleFields.add(lineCoord - 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord -= 1
                     }
@@ -95,6 +101,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord <= coord / 7 * 7 + 6){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("black*")) && coord / 7 * 7 <= lineCoord + 1 && lineCoord + 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord + 1].figure.type == null && field.getCells()[lineCoord + 1].cellType != "background") {
+                                possibleFields.add(lineCoord + 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord += 1
                     }
@@ -103,6 +115,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord > 0){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("black*")) && rowCoord - 7 >= 0){
+                            if (field.getCells()[rowCoord - 7].figure.type == null && field.getCells()[rowCoord - 7].cellType != "background") {
+                                possibleFields.add(rowCoord - 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord -= 7
                     }
@@ -111,6 +129,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord < 98){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("black*")) && rowCoord + 7 <= 98){
+                            if (field.getCells()[rowCoord + 7].figure.type == null && field.getCells()[rowCoord + 7].cellType != "background") {
+                                possibleFields.add(rowCoord + 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord += 7
                     }
@@ -127,6 +151,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord >= coord / 7 * 7){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("white*")) && coord / 7 * 7 <= lineCoord - 1 && lineCoord - 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord - 1].figure.type == null && field.getCells()[lineCoord - 1].cellType != "background") {
+                                possibleFields.add(lineCoord - 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord -= 1
                     }
@@ -135,6 +165,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord <= coord / 7 * 7 + 6){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("white*")) && coord / 7 * 7 <= lineCoord + 1 && lineCoord + 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord + 1].figure.type == null && field.getCells()[lineCoord + 1].cellType != "background") {
+                                possibleFields.add(lineCoord + 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord += 1
                     }
@@ -143,6 +179,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord > 0){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("white*")) && rowCoord - 7 >= 0){
+                            if (field.getCells()[rowCoord - 7].figure.type == null && field.getCells()[rowCoord - 7].cellType != "background") {
+                                possibleFields.add(rowCoord - 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord -= 7
                     }
@@ -151,6 +193,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord < 98){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("white*")) && rowCoord + 7 <= 98){
+                            if (field.getCells()[rowCoord + 7].figure.type == null && field.getCells()[rowCoord + 7].cellType != "background") {
+                                possibleFields.add(rowCoord + 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord += 7
                     }
