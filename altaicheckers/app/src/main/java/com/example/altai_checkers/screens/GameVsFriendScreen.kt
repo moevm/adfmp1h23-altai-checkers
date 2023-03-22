@@ -81,7 +81,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime2)
+                GameTimer(uiState.time2)
             }
 
         LazyColumn(modifier = Modifier
@@ -115,7 +115,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime1)
+                GameTimer(uiState.time1)
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

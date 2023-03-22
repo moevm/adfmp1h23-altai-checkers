@@ -38,7 +38,6 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    //game.Start()
     if(game.getField().showDialog.value)
         game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{
@@ -60,7 +59,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime2)
+                GameTimer(uiState.time2)
             }
             LazyColumn(modifier = Modifier
                 .padding(start = width / 40, end = width / 40)
@@ -92,7 +91,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime1)
+                GameTimer(uiState.time1)
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier

@@ -13,10 +13,17 @@ import com.example.altai_checkers.screens.*
 import com.example.altai_checkers.ui.theme.AltaicheckersTheme
 import com.example.altai_checkers.viewmodels.MainScreenViewModel
 import com.example.altai_checkers.viewmodels.StatisticsScreenViewModel
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Realm.init(this)
+        Realm.setDefaultConfiguration(
+            RealmConfiguration.Builder().allowWritesOnUiThread(true).allowQueriesOnUiThread(true)
+                .build()
+        )
         setContent {
             AltaicheckersTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

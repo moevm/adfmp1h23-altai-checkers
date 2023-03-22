@@ -7,8 +7,8 @@ data class GameUIState(
     var field: Field = Field(),
     val player1: String = "",
     val player2: String = "",
-    val totalTime1: Int = 20,
-    val totalTime2: Int = 20,
+    val time1: Int = 20,
+    val time2: Int = 20,
     val additionTime: Int = 5
 ) {
 
