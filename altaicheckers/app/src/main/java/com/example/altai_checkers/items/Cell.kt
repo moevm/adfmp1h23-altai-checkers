@@ -215,6 +215,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 - 2) * 7 <= possibleCoord - 6 && possibleCoord - 6 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 6].figure.type == null && field.getCells()[possibleCoord - 6].cellType != "background") {
+                                possibleFields.add(possibleCoord - 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 6
                     }
@@ -223,6 +229,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 - 2) * 7 <= possibleCoord - 8 && possibleCoord - 8 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 8].figure.type == null && field.getCells()[possibleCoord - 8].cellType != "background") {
+                                possibleFields.add(possibleCoord - 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 8
                     }
@@ -231,6 +243,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 + 2) * 7 <= possibleCoord + 6 && possibleCoord + 6 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 6].figure.type == null && field.getCells()[possibleCoord + 6].cellType != "background") {
+                                possibleFields.add(possibleCoord + 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 6
                     }
@@ -239,6 +257,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 + 2) * 7 <= possibleCoord + 8 && possibleCoord + 8 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 8].figure.type == null && field.getCells()[possibleCoord + 8].cellType != "background") {
+                                possibleFields.add(possibleCoord + 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 8
                     }
@@ -255,6 +279,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 - 2) * 7 <= possibleCoord - 6 && possibleCoord - 6 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 6].figure.type == null && field.getCells()[possibleCoord - 6].cellType != "background") {
+                                possibleFields.add(possibleCoord - 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 6
                     }
@@ -263,6 +293,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 - 2) * 7 <= possibleCoord - 8 && possibleCoord - 8 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 8].figure.type == null && field.getCells()[possibleCoord - 8].cellType != "background") {
+                                possibleFields.add(possibleCoord - 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 8
                     }
@@ -271,6 +307,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 + 2) * 7 <= possibleCoord + 6 && possibleCoord + 6 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 6].figure.type == null && field.getCells()[possibleCoord + 6].cellType != "background") {
+                                possibleFields.add(possibleCoord + 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 6
                     }
@@ -279,6 +321,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 + 2) * 7 <= possibleCoord + 8 && possibleCoord + 8 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 8].figure.type == null && field.getCells()[possibleCoord + 8].cellType != "background") {
+                                possibleFields.add(possibleCoord + 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 8
                     }
