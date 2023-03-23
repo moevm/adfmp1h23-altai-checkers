@@ -279,6 +279,126 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 - 2) * 7 <= possibleCoord - 6 && possibleCoord - 6 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 6].figure.type == null && field.getCells()[possibleCoord - 6].cellType != "background") {
+                                possibleFields.add(possibleCoord - 6)
+                            }
+                            else break
+                        }
+                        else break
+                        possibleCoord -= 6
+                    }
+
+                    possibleCoord = coord - 8
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 - 2) * 7 <= possibleCoord - 8 && possibleCoord - 8 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 8].figure.type == null && field.getCells()[possibleCoord - 8].cellType != "background") {
+                                possibleFields.add(possibleCoord - 8)
+                            }
+                            else break
+                        }
+                        else break
+                        possibleCoord -= 8
+                    }
+
+                    possibleCoord = coord + 6
+                    while (possibleCoord % 7 != 6){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 + 2) * 7 <= possibleCoord + 6 && possibleCoord + 6 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 6].figure.type == null && field.getCells()[possibleCoord + 6].cellType != "background") {
+                                possibleFields.add(possibleCoord + 6)
+                            }
+                            else break
+                        }
+                        else break
+                        possibleCoord += 6
+                    }
+
+                    possibleCoord = coord + 8
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 + 2) * 7 <= possibleCoord + 8 && possibleCoord + 8 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 8].figure.type == null && field.getCells()[possibleCoord + 8].cellType != "background") {
+                                possibleFields.add(possibleCoord + 8)
+                            }
+                            else break
+                        }
+                        else break
+                        possibleCoord += 8
+                    }
+                }
+            }
+            "white_queen" -> {
+                if (coord >= 73){ //добавить ход из своей крепости в чужую
+                    for (i in 49..69){
+                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
+                    }
+                }
+                else {
+                    var lineCoord = coord - 1
+                    while (lineCoord >= coord / 7 * 7){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("black*")) && coord / 7 * 7 <= lineCoord - 1 && lineCoord - 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord - 1].figure.type == null && field.getCells()[lineCoord - 1].cellType != "background") {
+                                possibleFields.add(lineCoord - 1)
+                            }
+                            else break
+                        }
+                        else break
+                        lineCoord -= 1
+                    }
+
+                    lineCoord = coord + 1
+                    while (lineCoord <= coord / 7 * 7 + 6){
+                        if (field.getCells()[lineCoord].cellType == "background") break
+                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("black*")) && coord / 7 * 7 <= lineCoord + 1 && lineCoord + 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord + 1].figure.type == null && field.getCells()[lineCoord + 1].cellType != "background") {
+                                possibleFields.add(lineCoord + 1)
+                            }
+                            else break
+                        }
+                        else break
+                        lineCoord += 1
+                    }
+
+                    var rowCoord = coord - 7
+                    while (rowCoord > 0){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("black*")) && rowCoord - 7 >= 0){
+                            if (field.getCells()[rowCoord - 7].figure.type == null && field.getCells()[rowCoord - 7].cellType != "background") {
+                                possibleFields.add(rowCoord - 7)
+                            }
+                            else break
+                        }
+                        else break
+                        rowCoord -= 7
+                    }
+
+                    rowCoord = coord + 7
+                    while (rowCoord < 98){
+                        if (field.getCells()[rowCoord].cellType == "background") break
+                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("black*")) && rowCoord + 7 <= 98){
+                            if (field.getCells()[rowCoord + 7].figure.type == null && field.getCells()[rowCoord + 7].cellType != "background") {
+                                possibleFields.add(rowCoord + 7)
+                            }
+                            else break
+                        }
+                        else break
+                        rowCoord += 7
+                    }
+
+                    var possibleCoord = coord - 6
+                    while (possibleCoord % 7 != 0){
+                        if (field.getCells()[possibleCoord].cellType == "background") break
+                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
                         else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("black*")) && (coord / 7 - 2) * 7 <= possibleCoord - 6 && possibleCoord - 6 <= (coord / 7 - 2) * 7 + 6){
                             if (field.getCells()[possibleCoord - 6].figure.type == null && field.getCells()[possibleCoord - 6].cellType != "background") {
                                 possibleFields.add(possibleCoord - 6)
@@ -332,78 +452,6 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     }
                 }
             }
-            "white_queen" -> {
-                if (coord >= 73){ //добавить ход из своей крепости в чужую
-                    for (i in 49..69){
-                        if (field.getCells()[i].figure.type == null) possibleFields.add(i)
-                    }
-                }
-                else {
-                    var lineCoord = coord - 1
-                    while (lineCoord >= coord / 7 * 7){
-                        if (field.getCells()[lineCoord].cellType == "background") break
-                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
-                        else break
-                        lineCoord -= 1
-                    }
-
-                    lineCoord = coord + 1
-                    while (lineCoord <= coord / 7 * 7 + 6){
-                        if (field.getCells()[lineCoord].cellType == "background") break
-                        else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
-                        else break
-                        lineCoord += 1
-                    }
-
-                    var rowCoord = coord - 7
-                    while (rowCoord > 0){
-                        if (field.getCells()[rowCoord].cellType == "background") break
-                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
-                        else break
-                        rowCoord -= 7
-                    }
-
-                    rowCoord = coord + 7
-                    while (rowCoord < 98){
-                        if (field.getCells()[rowCoord].cellType == "background") break
-                        else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
-                        else break
-                        rowCoord += 7
-                    }
-
-                    var possibleCoord = coord - 6
-                    while (possibleCoord % 7 != 0){
-                        if (field.getCells()[possibleCoord].cellType == "background") break
-                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
-                        else break
-                        possibleCoord -= 6
-                    }
-
-                    possibleCoord = coord - 8
-                    while (possibleCoord % 7 != 6){
-                        if (field.getCells()[possibleCoord].cellType == "background") break
-                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
-                        else break
-                        possibleCoord -= 8
-                    }
-
-                    possibleCoord = coord + 6
-                    while (possibleCoord % 7 != 6){
-                        if (field.getCells()[possibleCoord].cellType == "background") break
-                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
-                        else break
-                        possibleCoord += 6
-                    }
-
-                    possibleCoord = coord + 8
-                    while (possibleCoord % 7 != 0){
-                        if (field.getCells()[possibleCoord].cellType == "background") break
-                        else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
-                        else break
-                        possibleCoord += 8
-                    }
-                }
-            }
             "black_queen" -> {
                 if (coord <= 24){ //добавить ход из своей крепости в чужую
                     for (i in 28..48){
@@ -415,6 +463,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord >= coord / 7 * 7){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("white*")) && coord / 7 * 7 <= lineCoord - 1 && lineCoord - 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord - 1].figure.type == null && field.getCells()[lineCoord - 1].cellType != "background") {
+                                possibleFields.add(lineCoord - 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord -= 1
                     }
@@ -423,6 +477,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (lineCoord <= coord / 7 * 7 + 6){
                         if (field.getCells()[lineCoord].cellType == "background") break
                         else if (field.getCells()[lineCoord].figure.type == null) possibleFields.add(lineCoord)
+                        else if (field.getCells()[lineCoord].figure.type != null && field.getCells()[lineCoord].figure.type!!.contains(Regex("white*")) && coord / 7 * 7 <= lineCoord + 1 && lineCoord + 1 <= coord / 7 * 7 + 6){
+                            if (field.getCells()[lineCoord + 1].figure.type == null && field.getCells()[lineCoord + 1].cellType != "background") {
+                                possibleFields.add(lineCoord + 1)
+                            }
+                            else break
+                        }
                         else break
                         lineCoord += 1
                     }
@@ -431,6 +491,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord > 0){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("white*")) && rowCoord - 7 >= 0){
+                            if (field.getCells()[rowCoord - 7].figure.type == null && field.getCells()[rowCoord - 7].cellType != "background") {
+                                possibleFields.add(rowCoord - 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord -= 7
                     }
@@ -439,6 +505,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (rowCoord < 98){
                         if (field.getCells()[rowCoord].cellType == "background") break
                         else if (field.getCells()[rowCoord].figure.type == null) possibleFields.add(rowCoord)
+                        else if (field.getCells()[rowCoord].figure.type != null && field.getCells()[rowCoord].figure.type!!.contains(Regex("white*")) && rowCoord + 7 <= 98){
+                            if (field.getCells()[rowCoord + 7].figure.type == null && field.getCells()[rowCoord + 7].cellType != "background") {
+                                possibleFields.add(rowCoord + 7)
+                            }
+                            else break
+                        }
                         else break
                         rowCoord += 7
                     }
@@ -447,6 +519,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 - 2) * 7 <= possibleCoord - 6 && possibleCoord - 6 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 6].figure.type == null && field.getCells()[possibleCoord - 6].cellType != "background") {
+                                possibleFields.add(possibleCoord - 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 6
                     }
@@ -455,6 +533,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 - 2) * 7 <= possibleCoord - 8 && possibleCoord - 8 <= (coord / 7 - 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord - 8].figure.type == null && field.getCells()[possibleCoord - 8].cellType != "background") {
+                                possibleFields.add(possibleCoord - 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord -= 8
                     }
@@ -463,6 +547,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 6){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 + 2) * 7 <= possibleCoord + 6 && possibleCoord + 6 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 6].figure.type == null && field.getCells()[possibleCoord + 6].cellType != "background") {
+                                possibleFields.add(possibleCoord + 6)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 6
                     }
@@ -471,6 +561,12 @@ class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Fi
                     while (possibleCoord % 7 != 0){
                         if (field.getCells()[possibleCoord].cellType == "background") break
                         else if (field.getCells()[possibleCoord].figure.type == null) possibleFields.add(possibleCoord)
+                        else if (field.getCells()[possibleCoord].figure.type != null && field.getCells()[possibleCoord].figure.type!!.contains(Regex("white*")) && (coord / 7 + 2) * 7 <= possibleCoord + 8 && possibleCoord + 8 <= (coord / 7 + 2) * 7 + 6){
+                            if (field.getCells()[possibleCoord + 8].figure.type == null && field.getCells()[possibleCoord + 8].cellType != "background") {
+                                possibleFields.add(possibleCoord + 8)
+                            }
+                            else break
+                        }
                         else break
                         possibleCoord += 8
                     }
