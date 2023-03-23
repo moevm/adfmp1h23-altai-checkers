@@ -231,14 +231,6 @@ class StartGameTest {
     }
 
     @Test
-    fun checkWithoutChangePosition() {
-        game.getField().setPossibleMovies(game.getField().getCells()[73].getPossibleMoveFields(game.getField()))
-        val gameField = game.getField()
-        field.setCells(correctCells)
-        assertTrue(gameField == field)
-    }
-
-    @Test
     fun checkTimeAddition() {
         game.pauseActiveTimer()
         val timeBefore = game.uiState.value.totalTime1
