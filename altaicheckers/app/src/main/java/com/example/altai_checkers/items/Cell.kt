@@ -2,7 +2,7 @@ package com.example.altai_checkers.items
 
 import androidx.compose.ui.graphics.Color
 
-class Cell(val coord: Int, val cellType: String, val fill: Color, val figure: Figure) {
+class Cell(val coord: Int, val cellType: String, val fill: Color, var figure: Figure) {
 
 
     fun getPossibleMoveFields(field: Field): MutableList<Int> {

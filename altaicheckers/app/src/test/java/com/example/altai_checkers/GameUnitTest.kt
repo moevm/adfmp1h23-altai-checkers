@@ -7,11 +7,12 @@ import com.example.altai_checkers.items.Game
 import com.example.altai_checkers.ui.theme.BlackCell
 import com.example.altai_checkers.ui.theme.Theme
 import com.example.altai_checkers.ui.theme.WhiteCell
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StartGameTest {
+
     private val game = Game()
 
     var field = Field()
@@ -240,20 +241,22 @@ class StartGameTest {
 
     @Test
     fun checkTimeAddition() {
-        game.pauseTimer(1)
-        val timeBefore = game.uiState.value.totalTime1
+        game.startTimer1()
+        game.pauseActiveTimer()
+        val timeBefore = game.uiState.value.time1
         game.increaseTimer(1)
-        val diff = game.uiState.value.totalTime1 - timeBefore
-        assertEquals(diff, 5)
+        val diff = game.uiState.value.time1 - timeBefore
+        assertEquals(diff, game.uiState.value.additionTime)
     }
 
     @Test
     fun checkTimerSwitch() {
+        game.startTimer1()
         var activeTimer = game.activeTimerNumber
         assertEquals(activeTimer, 1)
         game.switchActiveTimer()
         activeTimer = game.activeTimerNumber
-        game.pauseTimer(activeTimer)
+        game.pauseActiveTimer()
         assertEquals(activeTimer, 2)
     }
 }

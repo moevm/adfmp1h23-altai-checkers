@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,9 +43,9 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
     //game.Start()
     if(game.getField().showDialog.value)
-        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{
-        game.getField().unsetPossibleMovies(game.getField().getSelectFields())
+        game.getField().unsetPossibleMovies(/*game.getField().getSelectFields()*/)
     }
     val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
@@ -78,7 +81,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime2)
+                GameTimer(uiState.time2)
             }
 
         LazyColumn(modifier = Modifier
@@ -112,7 +115,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime1)
+                GameTimer(uiState.time1)
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -198,11 +201,11 @@ fun FieldCellVSFriend(modifier: Modifier, fontWeight: FontWeight, cell: Cell, fi
                 .height(height / (35 / 2))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    if (field.selectCoord == 0) {
-                        field.selectCoord = cell.coord
+                    if (field.selectCoord.value == 0) {
+                        field.selectCoord.value = cell.coord
                         field.showDialog.value = !field.showDialog.value
-                    } else if (field.selectCoord == cell.coord) {
-                        field.selectCoord = 0
+                    } else if (field.selectCoord.value == cell.coord) {
+                        field.selectCoord.value = 0
                         field.showDialog.value = !field.showDialog.value
                     }
                 })

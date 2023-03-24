@@ -1,7 +1,9 @@
 package com.example.altai_checkers.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.example.altai_checkers.data.GameSettings
 import com.example.altai_checkers.states.MainScreenState
+import io.realm.Realm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -58,5 +60,20 @@ class MainScreenViewModel: ViewModel() {
 
         if (_uiState.value.error != "") onError()
         else onPass()
+    }
+
+    fun writeSettingsToDatabase() {
+        Realm.getDefaultInstance().executeTransaction() { realm ->
+            val settings = realm.where(GameSettings::class.java).findFirst()
+            if (settings != null) {
+                settings.player1 = _uiState.value.firstPlayer
+                settings.player2 = _uiState.value.secondPlayer
+                settings.time = _uiState.value.time
+                settings.addition = _uiState.value.additionTime
+            }
+            else {
+                realm.copyToRealm(GameSettings(_uiState.value.firstPlayer, _uiState.value.secondPlayer, _uiState.value.time, _uiState.value.additionTime))
+            }
+        }
     }
 }

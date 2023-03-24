@@ -1,7 +1,6 @@
 package com.example.altai_checkers.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.example.altai_checkers.states.MainScreenState
 import com.example.altai_checkers.states.StatisticEntry
 import com.example.altai_checkers.states.StatisticsScreenState
 import kotlinx.coroutines.flow.MutableStateFlow

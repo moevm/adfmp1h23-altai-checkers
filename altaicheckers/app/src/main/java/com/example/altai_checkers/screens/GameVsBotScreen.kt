@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +26,10 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
-import com.example.altai_checkers.items.*
-
+import com.example.altai_checkers.items.Cell
+import com.example.altai_checkers.items.Field
+import com.example.altai_checkers.items.Game
+import com.example.altai_checkers.items.GameTimer
 
 @Composable
 fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) {
@@ -33,11 +38,11 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    //game.Start()
+    game.initSettings()
     if(game.getField().showDialog.value)
-        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord].getPossibleMoveFields(game.getField()))
+        game.getField().setPossibleMovies(game.getField().getCells()[game.getField().selectCoord.value].getPossibleMoveFields(game.getField()))
     else{
-        game.getField().unsetPossibleMovies(game.getField().getSelectFields())
+        game.getField().unsetPossibleMovies(/*game.getField().getSelectFields()*/)
     }
     val uiState by game.uiState.collectAsState()
     Column(modifier = Modifier
@@ -55,7 +60,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime2)
+                GameTimer(uiState.time2)
             }
             LazyColumn(modifier = Modifier
                 .padding(start = width / 40, end = width / 40)
@@ -87,7 +92,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                     text = "0.5",
                     fontSize = 18.sp,
                 )
-                GameTimer(uiState.totalTime1)
+                GameTimer(uiState.time1)
             }
             Row(horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -110,9 +115,16 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     }
 
     if (pauseState){
+        game.pauseActiveTimer()
         PauseDialog(
             onDismiss = { },
-            onConfirm = {pauseState = false}
+            onConfirm = {
+                when(game.activeTimerNumber) {
+                    1 -> game.startTimer1()
+                    2 -> game.startTimer2()
+                }
+                pauseState = false
+            }
         )
     }
     if (helpState){
@@ -212,12 +224,19 @@ fun FieldCell(modifier: Modifier, fontWeight: FontWeight, cell: Cell, field: Fie
                 .height(height / (165 / 10))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    if (field.selectCoord == 0) {
-                        field.selectCoord = cell.coord
+                    if (field.selectCoord.value == 0) {
+                        field.selectCoord.value = cell.coord
                         field.showDialog.value = !field.showDialog.value
-                    } else if (field.selectCoord == cell.coord) {
-                        field.selectCoord = 0
+                    } else if (field.selectCoord.value == cell.coord) {
+                        field.selectCoord.value = 0
                         field.showDialog.value = !field.showDialog.value
+                    } else if (cell.figure.figureId == 11) {
+                        field.unsetPossibleMovies()
+                        field.moveFigure(field.selectCoord.value, cell.coord)
+                        field.showDialog.value = !field.showDialog.value
+                    } else {
+                        field.unsetPossibleMovies()
+                        field.selectCoord.value = cell.coord
                     }
                 })
         )
