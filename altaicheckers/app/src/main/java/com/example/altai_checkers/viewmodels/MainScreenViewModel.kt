@@ -69,10 +69,17 @@ class MainScreenViewModel: ViewModel() {
                 settings.player1 = _uiState.value.firstPlayer
                 settings.player2 = _uiState.value.secondPlayer
                 settings.time = _uiState.value.time
-                settings.addition = _uiState.value.additionTime
+                settings.addition = if (_uiState.value.withAddition) _uiState.value.additionTime else 0
             }
             else {
-                realm.copyToRealm(GameSettings(_uiState.value.firstPlayer, _uiState.value.secondPlayer, _uiState.value.time, _uiState.value.additionTime))
+                realm.copyToRealm(
+                    GameSettings(
+                        _uiState.value.firstPlayer,
+                        _uiState.value.secondPlayer,
+                        _uiState.value.time,
+                        if (_uiState.value.withAddition) _uiState.value.additionTime else 0
+                    )
+                )
             }
         }
     }
