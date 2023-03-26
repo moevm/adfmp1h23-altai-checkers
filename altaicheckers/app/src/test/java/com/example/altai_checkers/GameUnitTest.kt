@@ -3,7 +3,7 @@ package com.example.altai_checkers
 import com.example.altai_checkers.items.Cell
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.items.Figure
-import com.example.altai_checkers.items.Game
+import com.example.altai_checkers.viewmodels.Game
 import com.example.altai_checkers.ui.theme.BlackCell
 import com.example.altai_checkers.ui.theme.Theme
 import com.example.altai_checkers.ui.theme.WhiteCell

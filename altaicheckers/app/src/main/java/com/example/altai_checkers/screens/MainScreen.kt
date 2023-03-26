@@ -83,6 +83,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainScreenViewModel)
                         onConfirm = {
                             viewModel.checkBeforeStart(gamemode,
                                 {
+                                    viewModel.writeSettingsToDatabase()
                                     showGameSettingsDialog = false
                                     navController.navigate("GameVsFriendScreen")
                                 },

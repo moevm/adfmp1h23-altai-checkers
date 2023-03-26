@@ -1,9 +1,11 @@
-package com.example.altai_checkers.items
+package com.example.altai_checkers.viewmodels
 
 
 import android.os.CountDownTimer
 import androidx.lifecycle.ViewModel
 import com.example.altai_checkers.data.GameSettings
+import com.example.altai_checkers.items.Cell
+import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.states.GameUIState
 import io.realm.Realm
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +22,11 @@ class Game() :
     private var countDown1: CountDownTimer? = null
     private var countDown2: CountDownTimer? = null
     var activeTimerNumber: Int = 0
-    private var isStart = false
+    private var isStart: Boolean = false
+    private var isWhiteMove: Boolean = false
 
     init {
         _uiState.value.field.createField()
-        //_uiState.value = GameUIState()
-        //isStart = true
-        //startTimer1()
     }
 
     fun getField(): Field {
@@ -62,6 +62,7 @@ class Game() :
 
             override fun onFinish() {
                 _uiState.update { GameUIState -> GameUIState.copy(time1 = 0) }
+                _uiState.update { GameUIState -> GameUIState.copy(isTimeOver = true) }
             }
         }
         countDown1?.start()
@@ -76,6 +77,7 @@ class Game() :
 
             override fun onFinish() {
                 _uiState.update { GameUIState -> GameUIState.copy(time2 = 0) }
+                _uiState.update { GameUIState -> GameUIState.copy(isTimeOver = true) }
             }
         }
         countDown2?.start()
@@ -98,10 +100,37 @@ class Game() :
         }
     }
 
+    fun resumeTimer() {
+        when(activeTimerNumber) {
+            1 -> startTimer1()
+            2 -> startTimer2()
+        }
+    }
+
     fun increaseTimer(timerNumber: Int) {
         when (timerNumber) {
             1 -> _uiState.update { GameUIState -> GameUIState.copy(time1 = _uiState.value.time1 + _uiState.value.additionTime) }
             2 -> _uiState.update { GameUIState -> GameUIState.copy(time2 = _uiState.value.time2 + _uiState.value.additionTime) }
+        }
+    }
+
+    fun turn(cell: Cell) {
+        val field = _uiState.value.field
+        if (field.selectCoord.value == 0) {
+            field.selectCoord.value = cell.coord
+            field.showDialog.value = !field.showDialog.value
+        } else if (field.selectCoord.value == cell.coord) {
+            field.selectCoord.value = 0
+            field.showDialog.value = !field.showDialog.value
+        } else if (cell.figure.figureId == 11) {
+            field.unsetPossibleMovies()
+            field.moveFigure(field.selectCoord.value, cell.coord)
+            field.showDialog.value = !field.showDialog.value
+            isWhiteMove = !isWhiteMove
+            switchActiveTimer()
+        } else {
+            field.unsetPossibleMovies()
+            field.selectCoord.value = cell.coord
         }
     }
 
