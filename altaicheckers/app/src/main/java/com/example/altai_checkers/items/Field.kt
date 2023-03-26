@@ -48,6 +48,8 @@ class Field() {
     val showDialog = mutableStateOf(false)
     private var selectFields: MutableList<Int> = mutableListOf()
     var selectCoord = mutableStateOf(0)
+    var countBlack: Int = 17
+    var countWhite: Int = 17
 
     fun createField(){
             this.cells = listOf(

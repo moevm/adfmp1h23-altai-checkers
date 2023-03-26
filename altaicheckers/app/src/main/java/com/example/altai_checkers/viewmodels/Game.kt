@@ -2,6 +2,7 @@ package com.example.altai_checkers.viewmodels
 
 
 import android.os.CountDownTimer
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.altai_checkers.data.GameSettings
 import com.example.altai_checkers.items.Cell
@@ -23,7 +24,7 @@ class Game() :
     private var countDown2: CountDownTimer? = null
     var activeTimerNumber: Int = 0
     private var isStart: Boolean = false
-    private var isWhiteMove: Boolean = false
+    val isWhiteMove = mutableStateOf(true)
 
     init {
         _uiState.value.field.createField()
@@ -33,7 +34,7 @@ class Game() :
         return this._uiState.value.field
     }
 
-    fun initSettings() {
+    fun initSettings(gameMode: String) {
         if (!isStart) {
             Realm.getDefaultInstance().executeTransaction { realm ->
                 val settings = realm.where(GameSettings::class.java).findFirst()
@@ -44,7 +45,8 @@ class Game() :
                             player2 = settings.player2,
                             time1 = settings.time,
                             time2 = settings.time,
-                            additionTime = settings.addition
+                            additionTime = settings.addition,
+                            gameType = gameMode
                         )
                     }
                 }
@@ -62,7 +64,7 @@ class Game() :
 
             override fun onFinish() {
                 _uiState.update { GameUIState -> GameUIState.copy(time1 = 0) }
-                _uiState.update { GameUIState -> GameUIState.copy(isTimeOver = true) }
+                _uiState.update { GameUIState -> GameUIState.copy(isGameEnd = true) }
             }
         }
         countDown1?.start()
@@ -77,7 +79,7 @@ class Game() :
 
             override fun onFinish() {
                 _uiState.update { GameUIState -> GameUIState.copy(time2 = 0) }
-                _uiState.update { GameUIState -> GameUIState.copy(isTimeOver = true) }
+                _uiState.update { GameUIState -> GameUIState.copy(isGameEnd = true) }
             }
         }
         countDown2?.start()
@@ -114,7 +116,7 @@ class Game() :
         }
     }
 
-    fun turn(cell: Cell) {
+    fun playerTurn(cell: Cell) {
         val field = _uiState.value.field
         if (field.selectCoord.value == 0) {
             field.selectCoord.value = cell.coord
@@ -126,11 +128,20 @@ class Game() :
             field.unsetPossibleMovies()
             field.moveFigure(field.selectCoord.value, cell.coord)
             field.showDialog.value = !field.showDialog.value
-            isWhiteMove = !isWhiteMove
+            isWhiteMove.value = !isWhiteMove.value
+//            _uiState.update { GameUIState -> GameUIState.copy(isWhiteMove = !_uiState.value.isWhiteMove)}
             switchActiveTimer()
         } else {
             field.unsetPossibleMovies()
             field.selectCoord.value = cell.coord
+        }
+    }
+
+    fun botTurn() {
+        if (isWhiteMove.value && _uiState.value.gameType == "bot") {
+            isWhiteMove.value = !isWhiteMove.value
+//            _uiState.update { GameUIState -> GameUIState.copy(isWhiteMove = !_uiState.value.isWhiteMove)}
+            switchActiveTimer()
         }
     }
 

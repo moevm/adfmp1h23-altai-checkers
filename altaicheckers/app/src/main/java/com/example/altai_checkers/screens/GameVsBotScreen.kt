@@ -39,9 +39,9 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     var drawState by remember { mutableStateOf(false) }
     var defeatState by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    game.initSettings()
+    game.initSettings("bot")
     val uiState by game.uiState.collectAsState()
-    if (uiState.isTimeOver) {
+    if (uiState.isGameEnd) {
         EndGameDialog(
             onDismiss = { /*TODO*/ },
             onConfirm = {
@@ -57,6 +57,7 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
     else {
         game.getField().unsetPossibleMovies()
     }
+    game.botTurn()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -91,49 +92,56 @@ fun GameVsBotScreen(navController: NavHostController, game: Game = viewModel()) 
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 1],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 1])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 1])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 2],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 2])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 2])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 3],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 3])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 3])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 4],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 4])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 4])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 5],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 5])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 5])}
                     )
                     FieldCell(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 6],
                         game.getField(),
-                        height, game, onClick = {game.turn(game.getField().getCells()[index * 7 + 6])}
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 6])}
                     )
                 }
             }
@@ -264,7 +272,7 @@ fun DefeatButton(onSettingsClick: () -> Unit) {
 
 
 @Composable
-fun FieldCell(modifier: Modifier, fontWeight: FontWeight, cell: Cell, field: Field, height: Dp, game: Game, onClick: () -> Unit) {
+fun FieldCell(modifier: Modifier, fontWeight: FontWeight, cell: Cell, field: Field, height: Dp, onClick: () -> Unit) {
     if (cell.figure.figureId == 0) {
         Text(
             text = "",
