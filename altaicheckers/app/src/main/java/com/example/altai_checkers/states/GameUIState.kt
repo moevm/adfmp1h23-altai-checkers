@@ -10,5 +10,6 @@ data class GameUIState(
     val time1: Int = 20,
     val time2: Int = 20,
     val additionTime: Int = 5,
-    val isTimeOver: Boolean = false
+    val isGameEnd: Boolean = false,
+    val gameEndMessage: String = ""
 )

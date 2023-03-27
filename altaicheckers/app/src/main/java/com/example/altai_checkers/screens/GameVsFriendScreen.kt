@@ -5,10 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.altai_checkers.R
 import com.example.altai_checkers.items.Cell
+import com.example.altai_checkers.items.EndGameDialog
 import com.example.altai_checkers.items.Field
 import com.example.altai_checkers.viewmodels.Game
 import com.example.altai_checkers.items.GameTimer
@@ -40,7 +38,7 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
     var defeatState1 by remember { mutableStateOf(false) }
     var defeatState2 by remember { mutableStateOf(false) }
     val (height, width) = LocalConfiguration.current.run { screenHeightDp.dp to screenWidthDp.dp }
-    game.initSettings()
+    game.initSettings("friend")
     if (game.getField().showDialog.value)
         game.getField().setPossibleMovies(
             game.getField()
@@ -50,6 +48,19 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
         game.getField().unsetPossibleMovies()
     }
     val uiState by game.uiState.collectAsState()
+    if (uiState.isGameEnd) {
+        EndGameDialog(
+            onDismiss = { /*TODO*/ },
+            onConfirm = {
+                navController.popBackStack()
+            }
+        )
+    }
+    val snackbarHostState = remember { mutableStateOf(SnackbarHostState()) }
+    LaunchedEffect(game.isWhiteMove.value) {
+        val message: String = if (game.isWhiteMove.value) "Ход игрока: ${uiState.player1}" else "Ход игрока: ${uiState.player2}"
+        snackbarHostState.value.showSnackbar(message = message, duration = SnackbarDuration.Short)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,49 +114,56 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 1],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 1])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 2],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 2])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 3],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 3])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 4],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 4])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 5],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 5])}
                     )
                     FieldCellVSFriend(
                         Modifier.weight(2f),
                         FontWeight.Normal,
                         game.getField().getCells()[index * 7 + 6],
                         game.getField(),
-                        height
+                        height,
+                        onClick = {game.playerTurn(game.getField().getCells()[index * 7 + 6])}
                     )
                 }
             }
@@ -218,6 +236,21 @@ fun GameVsFriendScreen(navController: NavHostController, game: Game = viewModel(
                 navController.navigate("MainScreen")
             })
     }
+    Box(
+        modifier = Modifier.fillMaxHeight(),
+        contentAlignment = if (game.isWhiteMove.value) Alignment.TopCenter else Alignment.BottomCenter
+    ) {
+        SnackbarHost(
+            hostState = snackbarHostState.value,
+            snackbar = {data ->
+                Snackbar(
+                    snackbarData = data,
+                    modifier = Modifier.rotate(if (game.isWhiteMove.value) 0f else 180f).fillMaxWidth(),
+                )
+            }
+        )
+
+    }
 
 }
 
@@ -227,7 +260,8 @@ fun FieldCellVSFriend(
     fontWeight: FontWeight,
     cell: Cell,
     field: Field,
-    height: Dp
+    height: Dp,
+    onClick: () -> Unit
 ) {
     if (cell.figure.figureId == 0) {
         Text(
@@ -257,13 +291,14 @@ fun FieldCellVSFriend(
                 .height(height / (35 / 2))
                 .background(cell.fill)
                 .clickable(onClick = {
-                    if (field.selectCoord.value == 0) {
-                        field.selectCoord.value = cell.coord
-                        field.showDialog.value = !field.showDialog.value
-                    } else if (field.selectCoord.value == cell.coord) {
-                        field.selectCoord.value = 0
-                        field.showDialog.value = !field.showDialog.value
-                    }
+//                    if (field.selectCoord.value == 0) {
+//                        field.selectCoord.value = cell.coord
+//                        field.showDialog.value = !field.showDialog.value
+//                    } else if (field.selectCoord.value == cell.coord) {
+//                        field.selectCoord.value = 0
+//                        field.showDialog.value = !field.showDialog.value
+//                    }
+                    onClick()
                 })
         )
     }
